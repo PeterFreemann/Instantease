@@ -25,8 +25,8 @@ function About() {
         <div className="ab-hero-orb ab-hero-orb-1" />
         <div className="ab-hero-inner">
           <span className="ab-hero-tag">Our Story</span>
-          <h1 className="ab-hero-title">We make wellness<br /><em>effortless.</em></h1>
-          <p className="ab-hero-sub">InstantEase is revolutionizing the way Nigerians access health, wellness, and beauty products — delivered to your door in minutes.</p>
+          <h1 className="ab-hero-title">We make Healthy Food<br /><em> a Priority.</em></h1>
+          <p className="ab-hero-sub">InstantEase is revolutionizing the way Nigerians access healthy foods, wellness, and beauty products — delivered to your door in minutes.</p>
         </div>
       </section>
 
@@ -34,17 +34,18 @@ function About() {
         <div className="ab-container">
           <div className="ab-mission-inner ab-reveal" ref={r(0)}>
             <div className="ab-mission-img">
-              <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80" alt="Health and wellness" />
+              <img src="/about.jpg" alt="Health and wellness" />
               <div className="ab-mission-img-tag">Trusted across Lagos</div>
             </div>
             <div className="ab-mission-content">
               <span className="ab-section-tag">Mission</span>
               <h2 className="ab-content-title">Why we exist.</h2>
-              <p className="ab-body-text">At InstantEase, we believe that access to essential health, wellness, and beauty products should be simple, fast, and reliable. Our mission is to bridge the gap between customers and quality vendors through innovative technology and exceptional service.</p>
+              <p className="ab-body-text">At InstantEase, we believe that access to healthy foods, wellness, and beauty products should be simple, fast, and reliable. Our mission is to bridge the gap between customers and quality vendors through innovative technology and exceptional service.</p>
               <p className="ab-body-text">We are committed to creating a seamless ecosystem that benefits everyone — from customers seeking convenience, to vendors growing their businesses, to riders earning flexibly across Nigeria.</p>
               <div className="ab-mission-tags">
+                <span className="ab-tag">Healthy Foods & Drinks</span>
                 <span className="ab-tag">Pharmacy & Wellness</span>
-                <span className="ab-tag">Healthy Food</span>
+                
                 <span className="ab-tag">Beauty & Skincare</span>
               </div>
             </div>
@@ -87,7 +88,7 @@ function About() {
               <span className="ab-section-tag">How we started</span>
               <h2 className="ab-section-title">Our story.</h2>
               <p className="ab-body-text">InstantEase was born from a simple observation: people need quick access to health and wellness products, but the traditional shopping experience often falls short. Long queues, limited store hours, and the hassle of traveling to multiple locations create unnecessary barriers.</p>
-              <p className="ab-body-text">We set out to change that by creating a comprehensive platform that connects customers directly with pharmacies, healthy food vendors, and beauty retailers. Through our three specialized mobile apps, we built an ecosystem where convenience meets quality.</p>
+              <p className="ab-body-text">We set out to change that by creating a comprehensive platform that connects customers directly with pharmacies, healthy foods vendors, and beauty retailers. Through our three specialized mobile apps, we built an ecosystem where convenience meets quality.</p>
               <p className="ab-body-text">Today, InstantEase serves thousands of customers across Nigeria, supports hundreds of vendors, and provides flexible earning opportunities for our rider network.</p>
             </div>
           </div>

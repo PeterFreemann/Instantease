@@ -1,5 +1,5 @@
 .footer {
-  background-color: #00261a;
+  background-color: #1a5c38;
   color: white;
   padding: 4rem 0 2rem;
   margin-top: auto;
@@ -18,12 +18,12 @@
 }
 .footer-section { display: flex; flex-direction: column; gap: 1rem; }
 .footer-title { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
-.footer-title span { color: #a8f0d0; }
+.footer-title span { color: #fbb97d; }
 .footer-description { font-size: 0.9rem; line-height: 1.7; color: rgba(255,255,255,0.55); max-width: 280px; font-weight: 300; }
-.footer-heading { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #a8f0d0; }
+.footer-heading { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #fbb97d; }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
 .footer-link { font-size: 0.9rem; color: rgba(255,255,255,0.6); transition: color 0.2s; cursor: pointer; text-decoration: none; font-weight: 300; }
-.footer-link:hover { color: #a8f0d0; }
+.footer-link:hover { color: #fbb97d; }
 .footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: center; }
 .footer-copyright { font-size: 0.85rem; color: rgba(255,255,255,0.35); }
 @media (max-width: 1024px) { .footer-content { grid-template-columns: repeat(2,1fr); } }

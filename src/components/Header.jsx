@@ -20,7 +20,7 @@ function Header() {
         <nav className="nav">
           <Link to="/" className={location.pathname === "/" ? "nav-link active" : "nav-link"}>Home</Link>
           <Link to="/about" className={location.pathname === "/about" ? "nav-link active" : "nav-link"}>About Us</Link>
-          <Link to="/contact" className={location.pathname === "/contact" ? "nav-link active" : "nav-cta"}>Contact Us</Link>
+          <Link to="/contact" className={location.pathname === "/contact" ? "" : "nav-cta"}>Contact Us</Link>
           {/* <Link to="/download" className="nav-cta">Get the App</Link> */}
         </nav>
 

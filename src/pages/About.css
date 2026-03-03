@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 :root {
-  --forest: #003E29; --forest-deep: #00261a; --forest-mid: #005a3c;
-  --forest-light: #007a50; --mint: #a8f0d0; --mint-pale: #e8faf2;
-  --cream: #faf8f3; --charcoal: #1a1a1a; --muted: #6b7280; --border: #e5ede8;
+  --forest: #2d7a4f; --forest-deep: #1a5c38; --forest-mid: #3d9c65;
+  --forest-light: #52c47d; --mint: #a8e6c2; --mint-pale: #e6f7ee; --orange: #f97316; --orange-deep: #ea6000; --orange-pale: #fff4ed;
+  --cream: #f8fcf9; --charcoal: #1a2e22; --muted: #5a7a65; --border: #d4eadb;
 }
 
 .about { min-height: 100vh; background: var(--cream); font-family: 'DM Sans', sans-serif; }
@@ -17,12 +17,12 @@
 }
 .ab-hero-img {
   position: absolute; inset: 0;
-  background-image: url('https://images.unsplash.com/photo-1576765608866-5b51046452be?w=1600&q=80');
+  background-image: url('/instantease.jpg');
   background-size: cover; background-position: center top;
 }
 .ab-hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(0,26,17,0.93) 0%, rgba(0,62,41,0.78) 60%, rgba(0,38,26,0.88) 100%);
+  background: linear-gradient(135deg, rgba(26,92,56,0.85) 0%, rgba(45,122,79,0.62) 55%, rgba(26,92,56,0.78) 100%);
 }
 .ab-hero-grid {
   position: absolute; inset: 0;
@@ -52,7 +52,7 @@
   margin-bottom: 1.5rem; max-width: 700px;
   animation: abFadeUp 0.6s ease 0.1s both;
 }
-.ab-hero-title em { font-style: italic; color: var(--mint); }
+.ab-hero-title em { font-style: italic; color: #fbb97d; }
 .ab-hero-sub {
   font-size: 1.15rem; line-height: 1.75; color: rgba(255,255,255,0.65);
   font-weight: 300; max-width: 540px; animation: abFadeUp 0.6s ease 0.2s both;
@@ -88,7 +88,7 @@
 .ab-section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; color: var(--charcoal); line-height: 1.12; letter-spacing: -0.02em; }
 .ab-values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .ab-value-card { background: white; border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem 2rem; transition: all 0.35s ease; }
-.ab-value-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,62,41,0.1); border-color: var(--forest-light); }
+.ab-value-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(249,115,22,0.12); border-color: var(--orange); }
 .ab-value-num { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 900; color: var(--mint-pale); line-height: 1; margin-bottom: 1rem; letter-spacing: -0.04em; }
 .ab-value-icon { font-size: 1.75rem; margin-bottom: 1rem; }
 .ab-value-title { font-size: 1rem; font-weight: 600; color: var(--charcoal); margin-bottom: 0.75rem; }
@@ -105,7 +105,7 @@
 
 /* STATS */
 .ab-stats { position: relative; padding: 7rem 0; overflow: hidden; }
-.ab-stats-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest-mid) 60%, #007a50 100%); }
+.ab-stats-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest) 55%, var(--orange-deep) 100%); }
 .ab-stats-grid-bg { position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(168,240,208,0.06) 1px, transparent 1px); background-size: 32px 32px; }
 .ab-stats-inner { position: relative; z-index: 1; }
 .ab-stats-header { margin-bottom: 4rem; }
@@ -114,7 +114,7 @@
 .ab-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .ab-stat-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 2.5rem 2rem; transition: all 0.3s ease; }
 .ab-stat-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
-.ab-stat-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--mint); line-height: 1; margin-bottom: 0.5rem; }
+.ab-stat-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #fbb97d; line-height: 1; margin-bottom: 0.5rem; }
 .ab-stat-label { font-size: 0.9rem; color: rgba(255,255,255,0.6); font-weight: 300; }
 
 /* RESPONSIVE */

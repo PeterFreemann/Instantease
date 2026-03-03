@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 :root {
-  --forest: #003E29; --forest-deep: #00261a; --forest-mid: #005a3c;
-  --forest-light: #007a50; --mint: #a8f0d0; --mint-pale: #e8faf2;
-  --cream: #faf8f3; --charcoal: #1a1a1a; --muted: #6b7280; --border: #e5ede8;
+  --forest: #2d7a4f; --forest-deep: #1a5c38; --forest-mid: #3d9c65;
+  --forest-light: #52c47d; --mint: #a8e6c2; --mint-pale: #e6f7ee; --orange: #f97316; --orange-deep: #ea6000;
+  --cream: #f8fcf9; --charcoal: #1a2e22; --muted: #5a7a65; --border: #d4eadb;
 }
 
 .contact { min-height: 100vh; background: var(--cream); font-family: 'DM Sans', sans-serif; }
@@ -13,12 +13,12 @@
 .ct-hero { min-height: 60vh; position: relative; display: flex; align-items: center; overflow: hidden; background: var(--forest-deep); }
 .ct-hero-img {
   position: absolute; inset: 0;
-  background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600&q=80');
+  background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1800&q=85');
   background-size: cover; background-position: center;
 }
 .ct-hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(0,26,17,0.93) 0%, rgba(0,62,41,0.78) 60%, rgba(0,38,26,0.88) 100%);
+  background: linear-gradient(135deg, rgba(26,92,56,0.85) 0%, rgba(45,122,79,0.62) 55%, rgba(26,92,56,0.78) 100%);
 }
 .ct-hero-grid {
   position: absolute; inset: 0;
@@ -44,7 +44,7 @@
   margin-bottom: 1.5rem; max-width: 650px;
   animation: ctFadeUp 0.6s ease 0.1s both;
 }
-.ct-hero-title em { font-style: italic; color: var(--mint); }
+.ct-hero-title em { font-style: italic; color: #fbb97d; }
 .ct-hero-sub {
   font-size: 1.1rem; line-height: 1.75; color: rgba(255,255,255,0.65);
   font-weight: 300; max-width: 500px; animation: ctFadeUp 0.6s ease 0.2s both;
@@ -73,7 +73,7 @@
 
 .ct-info-items { display: flex; flex-direction: column; gap: 0.85rem; }
 .ct-info-item { display: flex; gap: 1rem; align-items: flex-start; padding: 1rem 1.1rem; border-radius: 14px; border: 1px solid var(--border); background: var(--cream); transition: all 0.25s ease; }
-.ct-info-item:hover { border-color: var(--forest-light); box-shadow: 0 4px 20px rgba(0,62,41,0.08); transform: translateX(4px); }
+.ct-info-item:hover { border-color: var(--orange); box-shadow: 0 4px 20px rgba(249,115,22,0.1); transform: translateX(4px); }
 .ct-info-icon-wrap { width: 40px; height: 40px; border-radius: 10px; background: var(--mint-pale); border: 1px solid rgba(168,240,208,0.5); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
 .ct-info-label { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--forest); margin-bottom: 0.2rem; }
 .ct-info-value { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
@@ -88,10 +88,10 @@
 .ct-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--forest); }
 .ct-input, .ct-textarea { padding: 0.9rem 1.1rem; border: 1.5px solid var(--border); border-radius: 12px; font-size: 0.95rem; font-family: 'DM Sans', sans-serif; font-weight: 400; color: var(--charcoal); background: white; transition: all 0.25s ease; }
 .ct-input::placeholder, .ct-textarea::placeholder { color: #b4c4bc; }
-.ct-input:focus, .ct-textarea:focus { outline: none; border-color: var(--forest); box-shadow: 0 0 0 3px rgba(0,62,41,0.08); }
+.ct-input:focus, .ct-textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,0.1); }
 .ct-textarea { resize: vertical; min-height: 120px; }
-.ct-submit { display: flex; align-items: center; justify-content: center; gap: 0.6rem; background: var(--forest); color: white; border: none; padding: 1rem 2.5rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.25s ease; width: 100%; }
-.ct-submit:hover { background: var(--forest-mid); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,62,41,0.25); }
+.ct-submit { display: flex; align-items: center; justify-content: center; gap: 0.6rem; background: var(--orange); color: white; border: none; padding: 1rem 2.5rem; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.25s ease; width: 100%; }
+.ct-submit:hover { background: var(--orange-deep); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(249,115,22,0.35); }
 .ct-submit-arrow { font-size: 1.1rem; transition: transform 0.2s; }
 .ct-submit:hover .ct-submit-arrow { transform: translateX(4px); }
 .ct-success { display: flex; align-items: center; gap: 0.6rem; padding: 1rem 1.25rem; background: var(--mint-pale); border: 1px solid rgba(168,240,208,0.6); color: var(--forest); border-radius: 12px; font-size: 0.95rem; font-weight: 500; animation: ctSlideDown 0.3s ease; }
@@ -112,7 +112,7 @@
 .ct-faq-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; color: var(--charcoal); line-height: 1.12; letter-spacing: -0.02em; }
 .ct-faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 .ct-faq-card { background: white; border: 1px solid var(--border); border-radius: 24px; padding: 2.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
-.ct-faq-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--forest), var(--mint)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
+.ct-faq-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--mint)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
 .ct-faq-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,62,41,0.1); border-color: transparent; }
 .ct-faq-card:hover::before { transform: scaleX(1); }
 .ct-faq-num { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; color: var(--mint-pale); line-height: 1; margin-bottom: 0.75rem; letter-spacing: -0.04em; }

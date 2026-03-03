@@ -3,36 +3,37 @@ import { useState, useEffect, useRef } from "react";
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
   :root {
-    --forest: #003E29; --forest-deep: #00261a; --forest-mid: #005a3c;
-    --forest-light: #007a50; --mint: #a8f0d0; --mint-pale: #e8faf2;
-    --cream: #faf8f3; --charcoal: #1a1a1a; --muted: #6b7280; --border: #e5ede8;
+    --forest: #2d7a4f; --forest-deep: #1a5c38; --forest-mid: #3d9c65;
+    --forest-light: #52c47d; --mint: #a8e6c2; --mint-pale: #e6f7ee;
+    --orange: #f97316; --orange-deep: #ea6000; --orange-pale: #fff4ed;
+    --cream: #f8fcf9; --charcoal: #1a2e22; --muted: #5a7a65; --border: #d4eadb;
   }
   body { font-family: 'DM Sans', sans-serif; }
   .ie-home { min-height:100vh; background:var(--cream); overflow-x:hidden; }
 
   .ie-hero { min-height:100vh; background:var(--forest-deep); position:relative; display:flex; align-items:center; overflow:hidden; }
-  .ie-hero-bg { position:absolute; inset:0; background-image:url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?w=1600&q=80'); background-size:cover; background-position:center top; }
-  .ie-hero-overlay { position:absolute; inset:0; background:linear-gradient(135deg, rgba(0,26,17,0.92) 0%, rgba(0,62,41,0.75) 50%, rgba(0,38,26,0.85) 100%); }
+  .ie-hero-bg { position:absolute; inset:0; background-image:url('/instant.jpg'); background-size:cover; background-position:center; }
+  .ie-hero-overlay { position:absolute; inset:0; background:linear-gradient(135deg, rgba(26,92,56,0.82) 0%, rgba(45,122,79,0.6) 50%, rgba(26,92,56,0.75) 100%); }
   .ie-hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(168,240,208,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(168,240,208,0.04) 1px, transparent 1px); background-size:60px 60px; }
   .ie-hero-orb { position:absolute; border-radius:50%; filter:blur(80px); animation:float 8s ease-in-out infinite; }
-  .ie-hero-orb-1 { width:500px; height:500px; background:rgba(0,122,80,0.25); top:-100px; right:-100px; }
-  .ie-hero-orb-2 { width:300px; height:300px; background:rgba(168,240,208,0.1); bottom:0; left:30%; animation-delay:-4s; }
+  .ie-hero-orb-1 { width:500px; height:500px; background:rgba(249,115,22,0.18); top:-100px; right:-100px; }
+  .ie-hero-orb-2 { width:300px; height:300px; background:rgba(82,196,125,0.15); bottom:0; left:30%; animation-delay:-4s; }
   @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
 
   .ie-hero-inner { position:relative; z-index:2; max-width:1200px; margin:0 auto; padding:0 3rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; width:100%; }
-  .ie-hero-badge { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(168,240,208,0.12); border:1px solid rgba(168,240,208,0.25); color:var(--mint); padding:0.4rem 1rem; border-radius:100px; font-size:0.8rem; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:1.75rem; animation:fadeUp 0.6s ease both; }
-  .ie-hero-badge::before { content:''; width:6px; height:6px; background:var(--mint); border-radius:50%; }
+  .ie-hero-badge { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(249,115,22,0.15); border:1px solid rgba(249,115,22,0.35); color:#fbb97d; padding:0.4rem 1rem; border-radius:100px; font-size:0.8rem; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:1.75rem; animation:fadeUp 0.6s ease both; }
+  .ie-hero-badge::before { content:''; width:6px; height:6px; background:#f97316; border-radius:50%; }
   .ie-hero-title { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,4.5vw,4.5rem); font-weight:900; line-height:1.08; color:white; letter-spacing:-0.02em; margin-bottom:1.5rem; animation:fadeUp 0.6s ease 0.1s both; }
-  .ie-hero-title em { font-style:italic; color:var(--mint); }
+  .ie-hero-title em { font-style:italic; color:#fbb97d; }
   .ie-hero-desc { font-size:1.1rem; line-height:1.75; color:rgba(255,255,255,0.7); max-width:480px; margin-bottom:2.5rem; font-weight:300; animation:fadeUp 0.6s ease 0.2s both; }
   .ie-hero-actions { display:flex; gap:1rem; align-items:center; animation:fadeUp 0.6s ease 0.3s both; }
-  .ie-btn-primary { background:var(--mint); color:var(--forest-deep); border:none; padding:0.9rem 2.25rem; border-radius:100px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.25s ease; display:flex; align-items:center; gap:0.5rem; }
-  .ie-btn-primary:hover { background:white; transform:translateY(-2px); box-shadow:0 8px 30px rgba(168,240,208,0.3); }
+  .ie-btn-primary { background:var(--orange); color:white; border:none; padding:0.9rem 2.25rem; border-radius:100px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.25s ease; display:flex; align-items:center; gap:0.5rem; }
+  .ie-btn-primary:hover { background:var(--orange-deep); transform:translateY(-2px); box-shadow:0 8px 30px rgba(249,115,22,0.4); }
   .ie-btn-ghost { background:transparent; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); padding:0.9rem 2.25rem; border-radius:100px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer; transition:all 0.25s ease; }
   .ie-btn-ghost:hover { border-color:rgba(255,255,255,0.6); color:white; transform:translateY(-2px); }
   .ie-hero-stats { display:flex; gap:2.5rem; margin-top:3.5rem; padding-top:2.5rem; border-top:1px solid rgba(255,255,255,0.1); animation:fadeUp 0.6s ease 0.4s both; }
   .ie-stat-val { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:white; line-height:1; }
-  .ie-stat-val span { color:var(--mint); }
+  .ie-stat-val span { color:#fbb97d; }
   .ie-stat-label { font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:0.25rem; letter-spacing:0.03em; text-transform:uppercase; }
   .ie-hero-visual { display:flex; justify-content:center; align-items:center; animation:fadeUp 0.7s ease 0.2s both; }
   .ie-phones { position:relative; width:320px; height:520px; }
@@ -46,13 +47,13 @@ const styles = `
   .ie-phone-bar.short { width:60%; }
   .ie-phone-bar.medium { width:80%; background:rgba(255,255,255,0.15); }
   .ie-phone-card-mini { background:rgba(168,240,208,0.1); border-radius:12px; padding:0.75rem; margin-top:0.5rem; display:flex; align-items:center; gap:0.6rem; }
-  .ie-phone-dot { width:28px; height:28px; border-radius:8px; background:var(--mint); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.8rem; }
+  .ie-phone-dot { width:28px; height:28px; border-radius:8px; background:var(--orange); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.8rem; }
   .ie-phone-lines { flex:1; }
   .ie-phone-line { height:6px; border-radius:3px; background:rgba(255,255,255,0.2); margin-bottom:4px; }
   .ie-phone-line.s { width:50%; }
 
   .ie-section { padding:7rem 3rem; max-width:1200px; margin:0 auto; }
-  .ie-section-tag { display:inline-block; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--forest); background:var(--mint-pale); padding:0.35rem 0.9rem; border-radius:100px; margin-bottom:1.25rem; }
+  .ie-section-tag { display:inline-block; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--forest-deep); background:var(--mint-pale); padding:0.35rem 0.9rem; border-radius:100px; margin-bottom:1.25rem; }
   .ie-section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:800; color:var(--charcoal); line-height:1.15; letter-spacing:-0.02em; margin-bottom:0.75rem; }
   .ie-section-sub { font-size:1.05rem; color:var(--muted); line-height:1.7; font-weight:300; max-width:520px; }
   .ie-section-header { display:grid; grid-template-columns:1fr auto; align-items:end; margin-bottom:4rem; gap:2rem; }
@@ -64,9 +65,9 @@ const styles = `
   .ie-cat-bg { position:absolute; inset:0; transition:transform 0.5s ease; }
   .ie-cat-card:hover .ie-cat-bg { transform:scale(1.06); }
   .ie-cat-bg-1 { background-image:url('https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=80'); background-size:cover; background-position:center; }
-  .ie-cat-bg-2 { background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80'); background-size:cover; background-position:center; }
+  .ie-cat-bg-2 { background-image:url('/food.jpg'); background-size:cover; background-position:center; }
   .ie-cat-bg-3 { background-image:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80'); background-size:cover; background-position:center; }
-  .ie-cat-bg-1::after, .ie-cat-bg-2::after, .ie-cat-bg-3::after { content:''; position:absolute; inset:0; background:linear-gradient(160deg,rgba(0,26,17,0.6) 0%,rgba(0,62,41,0.4) 100%); }
+  .ie-cat-bg-1::after, .ie-cat-bg-2::after, .ie-cat-bg-3::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(26,46,34,0.82) 0%,rgba(26,46,34,0.2) 60%,transparent 100%); }
   .ie-cat-pattern { position:absolute; inset:0; opacity:0.08; background-image:radial-gradient(circle,rgba(168,240,208,1) 1px,transparent 1px); background-size:24px 24px; }
   .ie-cat-emoji { position:absolute; top:2rem; right:2rem; font-size:4rem; opacity:0.25; transition:opacity 0.3s, transform 0.3s; }
   .ie-cat-card:hover .ie-cat-emoji { opacity:0.5; transform:scale(1.1) rotate(-5deg); }
@@ -79,7 +80,7 @@ const styles = `
 
   .ie-how-wrap { background:var(--cream); }
   .ie-how-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; position:relative; }
-  .ie-how-grid::before { content:''; position:absolute; top:40px; left:calc(12.5% + 20px); right:calc(12.5% + 20px); height:1px; background:linear-gradient(90deg,transparent,var(--border),var(--forest-light),var(--border),transparent); z-index:0; }
+  .ie-how-grid::before { content:''; position:absolute; top:40px; left:calc(12.5% + 20px); right:calc(12.5% + 20px); height:1px; background:linear-gradient(90deg,transparent,var(--mint),var(--orange),var(--mint),transparent); z-index:0; }
   .ie-step { text-align:center; position:relative; z-index:1; }
   .ie-step-num { width:80px; height:80px; border-radius:50%; background:white; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:700; color:var(--forest); margin:0 auto 1.5rem; transition:all 0.3s ease; }
   .ie-step:hover .ie-step-num { background:var(--forest); color:var(--mint); border-color:var(--forest); transform:scale(1.1); box-shadow:0 8px 30px rgba(0,62,41,0.25); }
@@ -106,7 +107,7 @@ const styles = `
   .ie-trust-wrap { background:white; padding:7rem 0; }
   .ie-trust-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
   .ie-trust-card { padding:2.5rem; border-radius:20px; border:1px solid var(--border); background:var(--cream); transition:all 0.3s ease; }
-  .ie-trust-card:hover { border-color:var(--forest-light); box-shadow:0 12px 40px rgba(0,62,41,0.08); transform:translateY(-4px); }
+  .ie-trust-card:hover { border-color:var(--orange); box-shadow:0 12px 40px rgba(249,115,22,0.1); transform:translateY(-4px); }
   .ie-trust-icon { font-size:2rem; margin-bottom:1.25rem; }
   .ie-trust-title { font-size:1.1rem; font-weight:600; color:var(--charcoal); margin-bottom:0.75rem; }
   .ie-trust-text { font-size:0.9rem; color:var(--muted); line-height:1.7; font-weight:300; }
@@ -211,25 +212,25 @@ export default function Home() {
           <div className="ie-hero-inner">
             <div>
               <div className="ie-hero-badge">Now delivering in your city</div>
-              <h1 className="ie-hero-title">Health &amp; Wellness,<br /><em>Delivered Instantly.</em></h1>
-              <p className="ie-hero-desc">InstantEase connects pharmacies, healthy food vendors, and beauty brands directly to your door — fast, safe, and effortless.</p>
-              <div className="ie-hero-actions">
+              <h1 className="ie-hero-title">Healthy Foods,<br /><em>Delivered Instantly.</em></h1>
+              <p className="ie-hero-desc">InstantEase connects  healthy food vendors, pharmacies, and beauty brands directly to your door — fast, safe, and effortless.</p>
+              {/* <div className="ie-hero-actions">
                 <button className="ie-btn-primary"><span>Get Started</span><span>→</span></button>
                 <button className="ie-btn-ghost">Explore Services</button>
-              </div>
+              </div> */}
               <div className="ie-hero-stats">
                 <div><div className="ie-stat-val">50K<span>+</span></div><div className="ie-stat-label">Customers</div></div>
                 <div><div className="ie-stat-val">1.2K<span>+</span></div><div className="ie-stat-label">Vendors</div></div>
                 <div><div className="ie-stat-val">99<span>%</span></div><div className="ie-stat-label">On-time rate</div></div>
               </div>
             </div>
-            <div className="ie-hero-visual">
+            {/* <div className="ie-hero-visual">
               <div className="ie-phones">
                 <div className="ie-phone ie-phone-1"><PhoneCard num={0} /></div>
                 <div className="ie-phone ie-phone-2"><PhoneCard num={1} /></div>
                 <div className="ie-phone ie-phone-3"><PhoneCard num={2} /></div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -244,8 +245,9 @@ export default function Home() {
             </div>
             <div className="ie-categories-grid">
               {[
-                { bg: "ie-cat-bg-1", emoji: "💊", label: "Health", title: "Pharmacy & Wellness", desc: "Prescription meds, OTC drugs, vitamins, supplements, and wellness essentials — delivered securely." },
+                
                 { bg: "ie-cat-bg-2", emoji: "🥗", label: "Nutrition", title: "Healthy Food & Drinks", desc: "Fresh meals, organic produce, smoothies and nutritious snacks from top-rated vendors near you." },
+                { bg: "ie-cat-bg-1", emoji: "💊", label: "Health", title: "Pharmacy & Wellness", desc: "Prescription meds, OTC drugs, vitamins, supplements, and wellness essentials — delivered securely." },
                 { bg: "ie-cat-bg-3", emoji: "✨", label: "Beauty", title: "Beauty & Skincare", desc: "Curated skincare, cosmetics and beauty products from brands you know and love." },
               ].map((c, i) => (
                 <div key={i} className={"ie-cat-card ie-reveal"} ref={r(1 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
@@ -348,7 +350,7 @@ export default function Home() {
             <div className="ie-cta-orb" />
             <div className="ie-cta-text">
               <div className="ie-cta-tag">Ready to begin?</div>
-              <h2 className="ie-cta-title">Your health &amp; wellness,<br /><em>at your fingertips.</em></h2>
+              <h2 className="ie-cta-title">Healthy food,<br /><em>at your fingertips.</em></h2>
               <p className="ie-cta-sub">Join thousands already using InstantEase. Download the app and get your first order delivered today.</p>
             </div>
             <div className="ie-cta-actions">
