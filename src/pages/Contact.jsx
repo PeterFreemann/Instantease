@@ -34,12 +34,10 @@ function Contact() {
   return (
     <div className="contact">
 
-      {/* HERO */}
       <section className="ct-hero">
-        <div className="ct-hero-bg" />
+        <div className="ct-hero-img" />
+        <div className="ct-hero-overlay" />
         <div className="ct-hero-grid" />
-        <div className="ct-hero-orb ct-hero-orb-1" />
-        <div className="ct-hero-orb ct-hero-orb-2" />
         <div className="ct-hero-inner">
           <span className="ct-hero-tag">Reach Out</span>
           <h1 className="ct-hero-title">Let us talk.<br /><em>We are listening.</em></h1>
@@ -47,24 +45,26 @@ function Contact() {
         </div>
       </section>
 
-      {/* MAIN CONTENT */}
       <section className="ct-content">
         <div className="ct-container">
           <div className="ct-grid">
 
-            {/* INFO PANEL */}
             <div className="ct-info ct-reveal" ref={r(0)}>
               <div className="ct-info-header">
                 <span className="ct-section-tag">Contact Info</span>
                 <h2 className="ct-info-title">Get in touch.</h2>
                 <p className="ct-info-sub">Reach out through any of the following channels. We are here to help.</p>
               </div>
+              <div className="ct-info-img">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=80" alt="Customer support" />
+                <div className="ct-info-img-badge">Lagos, Nigeria <span>\uD83C\uDDF3\uD83C\uDDEC</span></div>
+              </div>
               <div className="ct-info-items">
                 {[
-                  { icon: "📧", label: "Email", value: "support@instantease.com" },
-                  { icon: "📞", label: "Phone", value: "+1 (555) 123-4567" },
-                  { icon: "📍", label: "Address", value: "123 Business Plaza, Suite 100\nCity, State 12345" },
-                  { icon: "🕒", label: "Business Hours", value: "Mon – Fri: 9:00 AM – 6:00 PM\nSat: 10:00 AM – 4:00 PM" },
+                  { icon: "\uD83D\uDCE7", label: "Email", value: "support@instantease.com" },
+                  { icon: "\uD83D\uDCDE", label: "Phone", value: "+234 800 INSTANT" },
+                  { icon: "\uD83D\uDCCD", label: "Address", value: "Victoria Island, Lagos, Nigeria" },
+                  { icon: "\uD83D\uDD52", label: "Business Hours", value: "Mon - Fri: 8:00 AM - 8:00 PM\nSat - Sun: 9:00 AM - 5:00 PM" },
                 ].map((item, i) => (
                   <div key={i} className="ct-info-item">
                     <div className="ct-info-icon-wrap">{item.icon}</div>
@@ -81,7 +81,6 @@ function Contact() {
               </div>
             </div>
 
-            {/* FORM */}
             <div className="ct-form-wrap ct-reveal" ref={r(1)}>
               <div className="ct-form-header">
                 <span className="ct-section-tag">Send a message</span>
@@ -108,11 +107,11 @@ function Contact() {
                 </div>
                 <button type="submit" className="ct-submit">
                   <span>Send Message</span>
-                  <span className="ct-submit-arrow">→</span>
+                  <span className="ct-submit-arrow">&#x2192;</span>
                 </button>
                 {submitted && (
                   <div className="ct-success">
-                    <span>✓</span> Thank you! We will get back to you soon.
+                    <span>&#x2713;</span> Thank you! We will get back to you soon.
                   </div>
                 )}
               </form>
@@ -122,7 +121,27 @@ function Contact() {
         </div>
       </section>
 
-      {/* FAQ */}
+      <section className="ct-img-banner">
+        <div className="ct-img-banner-grid">
+          <div className="ct-img-banner-item">
+            <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=600&q=80" alt="Pharmacy" />
+            <div className="ct-img-banner-label">Pharmacy</div>
+          </div>
+          <div className="ct-img-banner-item ct-img-banner-tall">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Food delivery" />
+            <div className="ct-img-banner-label">Healthy Food</div>
+          </div>
+          <div className="ct-img-banner-item">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80" alt="Beauty" />
+            <div className="ct-img-banner-label">Beauty</div>
+          </div>
+          <div className="ct-img-banner-item ct-img-banner-tall">
+            <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=600&q=80" alt="Rider" />
+            <div className="ct-img-banner-label">Fast Delivery</div>
+          </div>
+        </div>
+      </section>
+
       <section className="ct-faq">
         <div className="ct-container">
           <div className="ct-faq-header ct-reveal" ref={r(2)}>
@@ -134,7 +153,7 @@ function Contact() {
               { q: "How do I become a vendor?", a: "Download our Vendor App and complete the registration process. Our team will review your application and get back to you within 48 hours." },
               { q: "What are the delivery charges?", a: "Delivery charges vary based on distance and order value. Orders above a certain amount may qualify for free delivery." },
               { q: "How can I track my order?", a: "Once your order is confirmed, you can track it in real-time through the Customer App. You will receive updates at every stage of delivery." },
-              { q: "Do you operate in my area?", a: "Check the Customer App to see if we are available in your location. We are constantly expanding to new areas." },
+              { q: "Do you operate in my area?", a: "Check the Customer App to see if we are available in your location. We are constantly expanding to new areas across Nigeria." },
             ].map((faq, i) => (
               <div key={i} className="ct-faq-card ct-reveal" ref={r(3 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
                 <div className="ct-faq-num">0{i + 1}</div>

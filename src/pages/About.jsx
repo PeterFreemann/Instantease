@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import './About.css';
+import "./About.css";
 
 function About() {
   const revealRefs = useRef([]);
@@ -19,39 +19,33 @@ function About() {
     <div className="about">
 
       <section className="ab-hero">
-        <div className="ab-hero-bg" />
+        <div className="ab-hero-img" />
+        <div className="ab-hero-overlay" />
         <div className="ab-hero-grid" />
         <div className="ab-hero-orb ab-hero-orb-1" />
-        <div className="ab-hero-orb ab-hero-orb-2" />
         <div className="ab-hero-inner">
           <span className="ab-hero-tag">Our Story</span>
           <h1 className="ab-hero-title">We make wellness<br /><em>effortless.</em></h1>
-          <p className="ab-hero-sub">
-            InstantEase is revolutionizing the way you access health, wellness, and beauty products
-            — delivered to your door in minutes.
-          </p>
+          <p className="ab-hero-sub">InstantEase is revolutionizing the way Nigerians access health, wellness, and beauty products — delivered to your door in minutes.</p>
         </div>
       </section>
 
       <section className="ab-mission">
         <div className="ab-container">
           <div className="ab-mission-inner ab-reveal" ref={r(0)}>
-            <div className="ab-mission-label">Mission</div>
+            <div className="ab-mission-img">
+              <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80" alt="Health and wellness" />
+              <div className="ab-mission-img-tag">Trusted across Lagos</div>
+            </div>
             <div className="ab-mission-content">
+              <span className="ab-section-tag">Mission</span>
               <h2 className="ab-content-title">Why we exist.</h2>
-              <p className="ab-body-text">
-                At InstantEase, we believe that access to essential health, wellness, and beauty
-                products should be simple, fast, and reliable. Our mission is to bridge the gap
-                between customers and quality vendors through innovative technology and exceptional service.
-              </p>
-              <p className="ab-body-text">
-                We are committed to creating a seamless ecosystem that benefits everyone — from
-                customers seeking convenience, to vendors growing their businesses, to riders earning flexibly.
-              </p>
+              <p className="ab-body-text">At InstantEase, we believe that access to essential health, wellness, and beauty products should be simple, fast, and reliable. Our mission is to bridge the gap between customers and quality vendors through innovative technology and exceptional service.</p>
+              <p className="ab-body-text">We are committed to creating a seamless ecosystem that benefits everyone — from customers seeking convenience, to vendors growing their businesses, to riders earning flexibly across Nigeria.</p>
               <div className="ab-mission-tags">
-                <span className="ab-tag">Pharmacy &amp; Wellness</span>
-                <span className="ab-tag">Healthy Food &amp; Drinks</span>
-                <span className="ab-tag">Beauty &amp; Skincare</span>
+                <span className="ab-tag">Pharmacy & Wellness</span>
+                <span className="ab-tag">Healthy Food</span>
+                <span className="ab-tag">Beauty & Skincare</span>
               </div>
             </div>
           </div>
@@ -66,10 +60,10 @@ function About() {
           </div>
           <div className="ab-values-grid">
             {[
-              { num: "01", icon: "⚡", title: "Speed & Efficiency", desc: "We prioritize quick delivery times and streamlined processes to ensure you get what you need, when you need it." },
-              { num: "02", icon: "🤝", title: "Trust & Reliability", desc: "We partner with verified vendors and trusted riders to guarantee quality service and authentic products every time." },
-              { num: "03", icon: "💡", title: "Innovation", desc: "We continuously improve our platform with cutting-edge technology to enhance user experience across all our apps." },
-              { num: "04", icon: "🌱", title: "Community First", desc: "We are committed to supporting local businesses and creating economic opportunities within the communities we serve." },
+              { num: "01", icon: "\u26A1", title: "Speed & Efficiency", desc: "We prioritize quick delivery times and streamlined processes to ensure you get what you need, when you need it." },
+              { num: "02", icon: "\uD83E\uDD1D", title: "Trust & Reliability", desc: "We partner with verified vendors and trusted riders to guarantee quality service and authentic products every time." },
+              { num: "03", icon: "\uD83D\uDCA1", title: "Innovation", desc: "We continuously improve our platform with cutting-edge technology to enhance user experience across all our apps." },
+              { num: "04", icon: "\uD83C\uDF31", title: "Community First", desc: "We are committed to supporting local businesses and creating economic opportunities within the communities we serve." },
             ].map((v, i) => (
               <div key={i} className="ab-value-card ab-reveal" ref={r(2 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
                 <div className="ab-value-num">{v.num}</div>
@@ -85,28 +79,16 @@ function About() {
       <section className="ab-story">
         <div className="ab-container">
           <div className="ab-story-inner">
-            <div className="ab-story-left ab-reveal" ref={r(6)}>
-              <span className="ab-section-tag">How we started</span>
-              <h2 className="ab-section-title">Our story.</h2>
+            <div className="ab-story-img ab-reveal" ref={r(6)}>
+              <img src="https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=800&q=80" alt="Delivery rider" />
+              <div className="ab-story-img-badge">Serving <span>Lagos</span> & beyond</div>
             </div>
             <div className="ab-story-right ab-reveal" ref={r(7)}>
-              <p className="ab-body-text">
-                InstantEase was born from a simple observation: people need quick access to health
-                and wellness products, but the traditional shopping experience often falls short.
-                Long queues, limited store hours, and the hassle of traveling to multiple locations
-                create unnecessary barriers.
-              </p>
-              <p className="ab-body-text">
-                We set out to change that by creating a comprehensive platform that connects
-                customers directly with pharmacies, healthy food vendors, and beauty retailers.
-                Through our three specialized mobile apps, we built an ecosystem where convenience
-                meets quality.
-              </p>
-              <p className="ab-body-text">
-                Today, InstantEase serves thousands of customers, supports hundreds of vendors,
-                and provides flexible earning opportunities for our rider network. We are proud
-                to be making a positive impact on people's daily lives.
-              </p>
+              <span className="ab-section-tag">How we started</span>
+              <h2 className="ab-section-title">Our story.</h2>
+              <p className="ab-body-text">InstantEase was born from a simple observation: people need quick access to health and wellness products, but the traditional shopping experience often falls short. Long queues, limited store hours, and the hassle of traveling to multiple locations create unnecessary barriers.</p>
+              <p className="ab-body-text">We set out to change that by creating a comprehensive platform that connects customers directly with pharmacies, healthy food vendors, and beauty retailers. Through our three specialized mobile apps, we built an ecosystem where convenience meets quality.</p>
+              <p className="ab-body-text">Today, InstantEase serves thousands of customers across Nigeria, supports hundreds of vendors, and provides flexible earning opportunities for our rider network.</p>
             </div>
           </div>
         </div>
