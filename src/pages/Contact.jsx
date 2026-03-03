@@ -129,7 +129,7 @@ function Contact() {
           </div>
           <div className="ct-img-banner-item ct-img-banner-tall">
             <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Food delivery" />
-            <div className="ct-img-banner-label">Healthy Foods</div>
+            <div className="ct-img-banner-label">Healthy Food</div>
           </div>
           <div className="ct-img-banner-item">
             <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80" alt="Beauty" />
