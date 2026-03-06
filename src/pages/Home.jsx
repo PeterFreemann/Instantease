@@ -212,7 +212,7 @@ export default function Home() {
           <div className="ie-hero-inner">
             <div>
               <div className="ie-hero-badge">Now delivering in your city</div>
-              <h1 className="ie-hero-title">Healthy Foods,<br /><em>Delivered Instantly.</em></h1>
+              <h1 className="ie-hero-title">Healthy Living,<br /><em>Delivered Instantly.</em></h1>
               <p className="ie-hero-desc">InstantEase connects  healthy food vendors, pharmacies, and beauty brands directly to your door — fast, safe, and effortless.</p>
               {/* <div className="ie-hero-actions">
                 <button className="ie-btn-primary"><span>Get Started</span><span>→</span></button>
@@ -350,7 +350,7 @@ export default function Home() {
             <div className="ie-cta-orb" />
             <div className="ie-cta-text">
               <div className="ie-cta-tag">Ready to begin?</div>
-              <h2 className="ie-cta-title">Healthy food,<br /><em>at your fingertips.</em></h2>
+              <h2 className="ie-cta-title">Healthy Living,<br /><em>at your fingertips.</em></h2>
               <p className="ie-cta-sub">Join thousands already using InstantEase. Download the app and get your first order delivered today.</p>
             </div>
             <div className="ie-cta-actions">

@@ -25,7 +25,7 @@ function About() {
         <div className="ab-hero-orb ab-hero-orb-1" />
         <div className="ab-hero-inner">
           <span className="ab-hero-tag">Our Story</span>
-          <h1 className="ab-hero-title">We make Healthy Food<br /><em> a Priority.</em></h1>
+          <h1 className="ab-hero-title">We make Healthy living<br /><em> a Priority.</em></h1>
           <p className="ab-hero-sub">InstantEase is revolutionizing the way Nigerians access healthy food, wellness, and beauty products — delivered to your door in minutes.</p>
         </div>
       </section>
