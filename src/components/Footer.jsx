@@ -7,7 +7,9 @@ function Footer() {
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">
-            <h3 className="footer-title">Instant<span>Ease</span></h3>
+            <Link to="/" className="logo">
+  <img src="/logo-primary.png" alt="InstantEase" />
+</Link>
             <p className="footer-description">
               Your trusted partner for instant delivery of health, wellness, and beauty products.
             </p>

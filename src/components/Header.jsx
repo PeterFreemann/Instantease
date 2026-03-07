@@ -12,15 +12,15 @@ function Header() {
   return (
     <header className="header">
       <div className="container">
-        <Link to="/" className="logo" onClick={closeMenu}>
-          Instant<span>Ease</span>
-        </Link>
+<Link to="/" className="logo" onClick={closeMenu}>
+  <img src="/logo-primary.png" alt="InstantEase" />
+</Link>
 
         {/* Desktop Nav */}
         <nav className="nav">
           <Link to="/" className={location.pathname === "/" ? "nav-link active" : "nav-link"}>Home</Link>
           <Link to="/about" className={location.pathname === "/about" ? "nav-link active" : "nav-link"}>About Us</Link>
-          <Link to="/contact" className={location.pathname === "/contact" ? "" : "nav-cta"}>Contact Us</Link>
+          <Link to="/contact" className="nav-cta">Contact Us</Link>
           {/* <Link to="/download" className="nav-cta">Get the App</Link> */}
         </nav>
 
@@ -37,7 +37,7 @@ function Header() {
         <nav className="mobile-nav">
           <Link to="/" className={location.pathname === "/" ? "mobile-link active" : "mobile-link"} onClick={closeMenu}>Home</Link>
           <Link to="/about" className={location.pathname === "/about" ? "mobile-link active" : "mobile-link"} onClick={closeMenu}>About Us</Link>
-          <Link to="/contact" className={location.pathname === "/contact" ? "mobile-link active" : "mobile-cta"} onClick={closeMenu}>Contact Us</Link>
+          <Link to="/contact" className= "mobile-cta">Contact Us</Link>
           {/* <Link to="/download" className="mobile-cta" onClick={closeMenu}>Get the App</Link> */}
         </nav>
       </div>
