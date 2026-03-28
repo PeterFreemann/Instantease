@@ -57,14 +57,14 @@ function Contact() {
               </div>
               <div className="ct-info-img">
                 <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=80" alt="Customer support" />
-                <div className="ct-info-img-badge">Lagos, Nigeria <span>\uD83C\uDDF3\uD83C\uDDEC</span></div>
+                {/* <div className="ct-info-img-badge">Lagos, Nigeria <span>\uD83C\uDDF3\uD83C\uDDEC</span></div> */}
               </div>
               <div className="ct-info-items">
                 {[
-                  { icon: "\uD83D\uDCE7", label: "Email", value: "support@instantease.com" },
-                  { icon: "\uD83D\uDCDE", label: "Phone", value: "+234 800 INSTANT" },
-                  { icon: "\uD83D\uDCCD", label: "Address", value: "Victoria Island, Lagos, Nigeria" },
-                  { icon: "\uD83D\uDD52", label: "Business Hours", value: "Mon - Fri: 8:00 AM - 8:00 PM\nSat - Sun: 9:00 AM - 5:00 PM" },
+                  { icon: "\uD83D\uDCE7", label: "Email", value: "admin@instantease.com.ng" },
+                  { icon: "\uD83D\uDCDE", label: "Phone", value: "+234 707 732 3387" },
+                  { icon: "\uD83D\uDCCD", label: "Address", value: "Lekki, Lagos State, Nigeria" },
+                  { icon: "\uD83D\uDD52", label: "Business Hours", value: "Mon - Fri: 8:00 AM - 8:00 PM\nSat - Sun: 8:00 AM - 9:00 PM" },
                 ].map((item, i) => (
                   <div key={i} className="ct-info-item">
                     <div className="ct-info-icon-wrap">{item.icon}</div>
