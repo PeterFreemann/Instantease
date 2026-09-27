@@ -33,9 +33,9 @@ function Footer() {
           <div className="footer-section">
             <h4 className="footer-heading">Get Our Apps</h4>
             <ul className="footer-links">
-              <li className="footer-link">Customer App</li>
-              <li className="footer-link">Vendor App</li>
-              <li className="footer-link">Rider App</li>
+              <li><a href="/downloads/instantease-customer-mobile-app.apk" download className="footer-link">Customer App (Android)</a></li>
+              <li><a href="/downloads/instantease-vendor-mobile-app.apk" download className="footer-link">Vendor App (Android)</a></li>
+              <li><a href="/downloads/instantease-rider-mobile-app.apk" download className="footer-link">Rider App (Android)</a></li>
             </ul>
           </div>
         </div>

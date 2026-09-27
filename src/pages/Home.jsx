@@ -102,6 +102,8 @@ const styles = `
   .ie-app-desc { font-size:0.9rem; color:rgba(255,255,255,0.5); line-height:1.7; font-weight:300; margin-bottom:2rem; }
   .ie-app-features { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
   .ie-app-features li { display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; color:rgba(255,255,255,0.65); }
+  .ie-app-download { display:inline-flex; align-items:center; gap:0.5rem; margin-top:2rem; background:var(--orange); color:white; padding:0.8rem 1.75rem; border-radius:100px; font-size:0.9rem; font-weight:600; text-decoration:none; transition:all 0.25s ease; }
+  .ie-app-download:hover { background:var(--orange-deep); transform:translateY(-2px); box-shadow:0 8px 30px rgba(249,115,22,0.4); }
   .ie-check { width:18px; height:18px; border-radius:50%; background:rgba(168,240,208,0.12); border:1px solid rgba(168,240,208,0.3); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:var(--mint); flex-shrink:0; }
 
   .ie-trust-wrap { background:white; padding:7rem 0; }
@@ -122,7 +124,7 @@ const styles = `
   .ie-cta-title em { font-style:italic; color:var(--mint); }
   .ie-cta-sub { font-size:1rem; color:rgba(255,255,255,0.6); line-height:1.7; font-weight:300; }
   .ie-cta-actions { display:flex; flex-direction:column; gap:0.75rem; position:relative; z-index:1; flex-shrink:0; }
-  .ie-dl-btn { display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:white; padding:0.9rem 1.5rem; border-radius:14px; cursor:pointer; transition:all 0.25s ease; font-family:'DM Sans',sans-serif; min-width:180px; }
+  .ie-dl-btn { display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:white; padding:0.9rem 1.5rem; border-radius:14px; cursor:pointer; transition:all 0.25s ease; font-family:'DM Sans',sans-serif; min-width:180px; text-decoration:none; }
   .ie-dl-btn:hover { background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.4); transform:translateX(4px); }
   .ie-dl-btn-icon { font-size:1.5rem; }
   .ie-dl-btn-sub { font-size:0.65rem; opacity:0.6; line-height:1; margin-bottom:0.2rem; display:block; }
@@ -302,9 +304,9 @@ export default function Home() {
             </div>
             <div className="ie-apps-grid">
               {[
-                { icon: "📱", name: "Customer App", desc: "Browse, order, and track deliveries from pharmacies, food vendors, and beauty brands — all in one place.", features: ["Easy browsing & ordering", "Real-time order tracking", "Secure payment methods", "Full order history"] },
-                { icon: "🏪", name: "Vendor App", desc: "Run your business smarter. Accept orders, manage inventory, and grow your customer base effortlessly.", features: ["Smart order management", "Live inventory tracking", "Sales analytics dashboard", "Customer insights & reviews"] },
-                { icon: "🏍️", name: "Rider App", desc: "Earn flexibly with optimized routes and clear earnings tracking. Join a trusted network of delivery riders.", features: ["Optimized route planning", "Flexible scheduling", "Live earnings tracker", "Performance metrics & ratings"] },
+                { icon: "📱", name: "Customer App", apk: "/downloads/instantease-customer-mobile-app.apk", desc: "Browse, order, and track deliveries from pharmacies, food vendors, and beauty brands — all in one place.", features: ["Easy browsing & ordering", "Real-time order tracking", "Secure payment methods", "Full order history"] },
+                { icon: "🏪", name: "Vendor App", apk: "/downloads/instantease-vendor-mobile-app.apk", desc: "Run your business smarter. Accept orders, manage inventory, and grow your customer base effortlessly.", features: ["Smart order management", "Live inventory tracking", "Sales analytics dashboard", "Customer insights & reviews"] },
+                { icon: "🏍️", name: "Rider App", apk: "/downloads/instantease-rider-mobile-app.apk", desc: "Earn flexibly with optimized routes and clear earnings tracking. Join a trusted network of delivery riders.", features: ["Optimized route planning", "Flexible scheduling", "Live earnings tracker", "Performance metrics & ratings"] },
               ].map((app, i) => (
                 <div key={i} className={"ie-app-card ie-reveal"} ref={r(10 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
                   <div className="ie-app-icon-wrap">{app.icon}</div>
@@ -315,6 +317,9 @@ export default function Home() {
                       <li key={j}><span className="ie-check">✓</span>{f}</li>
                     ))}
                   </ul>
+                  <a href={app.apk} download className="ie-app-download">
+                    <span>↓</span> Download APK
+                  </a>
                 </div>
               ))}
             </div>
@@ -355,17 +360,17 @@ export default function Home() {
             </div>
             <div className="ie-cta-actions">
               {[
-                { icon: "🍎", sub: "Download on the", main: "App Store" },
-                { icon: "▶", sub: "Get it on", main: "Google Play" },
-                { icon: "🏪", sub: "Become a", main: "Vendor Partner" },
+                { icon: "📱", sub: "Android APK", main: "Customer App", href: "/downloads/instantease-customer-mobile-app.apk" },
+                { icon: "🏪", sub: "Android APK", main: "Vendor App", href: "/downloads/instantease-vendor-mobile-app.apk" },
+                { icon: "🏍️", sub: "Android APK", main: "Rider App", href: "/downloads/instantease-rider-mobile-app.apk" },
               ].map((btn, i) => (
-                <button key={i} className="ie-dl-btn">
+                <a key={i} href={btn.href} download className="ie-dl-btn">
                   <span className="ie-dl-btn-icon">{btn.icon}</span>
                   <span>
                     <span className="ie-dl-btn-sub">{btn.sub}</span>
                     <span className="ie-dl-btn-main">{btn.main}</span>
                   </span>
-                </button>
+                </a>
               ))}
             </div>
           </div>
