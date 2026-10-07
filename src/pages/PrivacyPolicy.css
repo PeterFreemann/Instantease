@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --forest: #2d7a4f; --forest-deep: #1a5c38; --forest-mid: #3d9c65;
+  --forest-light: #52c47d; --mint: #a8e6c2; --mint-pale: #e6f7ee; --orange: #f97316; --orange-deep: #ea6000; --orange-pale: #fff4ed;
+  --cream: #f8fcf9; --charcoal: #1a2e22; --muted: #5a7a65; --border: #d4eadb;
+}
+
+.privacy { min-height: 100vh; background: var(--cream); font-family: 'DM Sans', sans-serif; }
+
+/* HERO */
+.pp-hero { background: var(--forest-deep); padding: 9rem 0 4rem; }
+.pp-hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
+.pp-hero-tag {
+  display: inline-block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;
+  color: var(--mint); background: rgba(168,230,194,0.12); border: 1px solid rgba(168,230,194,0.25);
+  padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.25rem;
+}
+.pp-hero-title {
+  font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 900;
+  color: #fff; line-height: 1.1; letter-spacing: -0.02em;
+}
+.pp-hero-sub { margin-top: 1rem; color: rgba(255,255,255,0.75); font-size: 1rem; }
+
+/* BODY */
+.pp-body { padding: 4rem 0 6rem; }
+.pp-container {
+  max-width: 1200px; margin: 0 auto; padding: 0 3rem;
+  display: grid; grid-template-columns: 260px 1fr; gap: 4rem; align-items: start;
+}
+
+.pp-toc {
+  position: sticky; top: 100px; background: #fff; border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.5rem;
+}
+.pp-toc-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--forest); margin-bottom: 0.75rem; }
+.pp-toc ol { padding-left: 1.2rem; margin: 0; }
+.pp-toc li { font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.45rem; color: var(--muted); }
+.pp-toc a { color: var(--muted); text-decoration: none; }
+.pp-toc a:hover { color: var(--forest); }
+
+.pp-content { max-width: 780px; color: var(--charcoal); }
+.pp-intro { font-size: 1.1rem; line-height: 1.8; color: var(--muted); margin-bottom: 2.5rem; }
+.pp-section { scroll-margin-top: 100px; margin-bottom: 2.75rem; }
+.pp-section h2 {
+  font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700;
+  color: var(--charcoal); margin-bottom: 1rem; letter-spacing: -0.01em;
+}
+.pp-section h3 { font-size: 1.05rem; font-weight: 600; color: var(--forest-deep); margin: 1.5rem 0 0.6rem; }
+.pp-section p, .pp-section li { font-size: 1rem; line-height: 1.8; color: #3b5446; }
+.pp-section p { margin-bottom: 1rem; }
+.pp-section ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+.pp-section li { margin-bottom: 0.5rem; }
+.pp-section strong { color: var(--charcoal); font-weight: 600; }
+.pp-section a { color: var(--forest); font-weight: 500; overflow-wrap: anywhere; }
+.pp-section a:hover { color: var(--orange-deep); }
+.pp-contact { list-style: none; padding-left: 0 !important; }
+
+@media (max-width: 900px) {
+  .pp-container { grid-template-columns: 1fr; gap: 2rem; padding: 0 1.5rem; }
+  .pp-hero-inner { padding: 0 1.5rem; }
+  .pp-hero { padding: 7rem 0 3rem; }
+  .pp-toc { position: static; }
+}
