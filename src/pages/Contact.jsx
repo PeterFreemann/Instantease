@@ -61,7 +61,7 @@ function Contact() {
               </div>
               <div className="ct-info-items">
                 {[
-                  { icon: "\uD83D\uDCE7", label: "Email", value: "admin@instantease.com.ng" },
+                  { icon: "\uD83D\uDCE7", label: "Email", value: "instanteaseapp@gmail.com" },
                   { icon: "\uD83D\uDCDE", label: "Phone", value: "+234 707 732 3387" },
                   { icon: "\uD83D\uDCCD", label: "Address", value: "Lekki, Lagos State, Nigeria" },
                   { icon: "\uD83D\uDD52", label: "Business Hours", value: "Mon - Fri: 8:00 AM - 8:00 PM\nSat - Sun: 8:00 AM - 9:00 PM" },

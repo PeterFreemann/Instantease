@@ -29,11 +29,13 @@
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
 .footer-link { font-size: 0.9rem; color: rgba(255,255,255,0.6); transition: color 0.2s; cursor: pointer; text-decoration: none; font-weight: 300; }
 .footer-link:hover { color: #fbb97d; }
-.footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: center; }
+.footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-legal { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 .footer-copyright { font-size: 0.85rem; color: rgba(255,255,255,0.35); }
 @media (max-width: 1024px) { .footer-content { grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 768px) {
   .footer { padding: 3rem 0 1.5rem; }
   .footer .container { padding: 0 1.5rem; }
   .footer-content { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column-reverse; align-items: flex-start; }
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
@@ -60,7 +61,7 @@ const styles = `
 
   .ie-categories-wrap { background:white; padding:7rem 0; }
   .ie-categories-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-  .ie-cat-card { position:relative; border-radius:24px; overflow:hidden; cursor:pointer; transition:transform 0.35s ease, box-shadow 0.35s ease; aspect-ratio:0.85; display:flex; flex-direction:column; justify-content:flex-end; }
+  .ie-cat-card { text-decoration:none; position:relative; border-radius:24px; overflow:hidden; cursor:pointer; transition:transform 0.35s ease, box-shadow 0.35s ease; aspect-ratio:0.85; display:flex; flex-direction:column; justify-content:flex-end; }
   .ie-cat-card:hover { transform:translateY(-8px); box-shadow:0 30px 60px rgba(0,62,41,0.2); }
   .ie-cat-bg { position:absolute; inset:0; transition:transform 0.5s ease; }
   .ie-cat-card:hover .ie-cat-bg { transform:scale(1.06); }
@@ -248,11 +249,11 @@ export default function Home() {
             <div className="ie-categories-grid">
               {[
                 
-                { bg: "ie-cat-bg-2", emoji: "🥗", label: "Nutrition", title: "Healthy Food & Drinks", desc: "Fresh meals, organic produce, smoothies and nutritious snacks from top-rated vendors near you." },
-                { bg: "ie-cat-bg-1", emoji: "💊", label: "Health", title: "Pharmacy & Wellness", desc: "Prescription meds, OTC drugs, vitamins, supplements, and wellness essentials — delivered securely." },
-                { bg: "ie-cat-bg-3", emoji: "✨", label: "Beauty", title: "Beauty & Skincare", desc: "Curated skincare, cosmetics and beauty products from brands you know and love." },
+                { to: "/services/food", bg: "ie-cat-bg-2", emoji: "🥗", label: "Nutrition", title: "Healthy Food & Drinks", desc: "Fresh meals, organic produce, smoothies and nutritious snacks from top-rated vendors near you." },
+                { to: "/services/pharmacy", bg: "ie-cat-bg-1", emoji: "💊", label: "Health", title: "Pharmacy & Wellness", desc: "Prescription meds, OTC drugs, vitamins, supplements, and wellness essentials — delivered securely." },
+                { to: "/services/beauty", bg: "ie-cat-bg-3", emoji: "✨", label: "Beauty", title: "Beauty & Skincare", desc: "Curated skincare, cosmetics and beauty products from brands you know and love." },
               ].map((c, i) => (
-                <div key={i} className={"ie-cat-card ie-reveal"} ref={r(1 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
+                <Link key={i} to={c.to} className={"ie-cat-card ie-reveal"} ref={r(1 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
                   <div className={"ie-cat-bg " + c.bg} />
                   <div className="ie-cat-pattern" />
                   <div className="ie-cat-emoji">{c.emoji}</div>
@@ -262,7 +263,7 @@ export default function Home() {
                     <p className="ie-cat-desc">{c.desc}</p>
                     <div className="ie-cat-arrow">Explore <span>→</span></div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

@@ -1,7 +1,7 @@
 import "./PrivacyPolicy.css";
 
 const EFFECTIVE_DATE = "October 7, 2026";
-const CONTACT_EMAIL = "admin@instantease.com.ng";
+const CONTACT_EMAIL = "instanteaseapp@gmail.com";
 const CONTACT_PHONE = "+234 707 732 3387";
 const CONTACT_ADDRESS = "Lekki, Lagos State, Nigeria";
 
@@ -220,8 +220,8 @@ const sections = [
         <p>You can delete your InstantEase account and its associated data at any time, using either method:</p>
         <ul>
           <li>
-            <strong>In the app:</strong> open the Customer, Vendor or Rider App and go to{" "}
-            <em>Profile → Settings → Delete Account</em>.
+            <strong>In the app:</strong> open the Customer, Vendor or Rider App, go to <em>Account</em>, then
+            tap <em>Delete my account</em> and confirm.
           </li>
           <li>
             <strong>By email:</strong> send a request to{" "}

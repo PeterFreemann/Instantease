@@ -20,15 +20,15 @@ function Footer() {
               <li><Link to="/" className="footer-link">Home</Link></li>
               <li><Link to="/about" className="footer-link">About Us</Link></li>
               <li><Link to="/contact" className="footer-link">Contact</Link></li>
-              <li><Link to="/privacy-policy" className="footer-link">Privacy Policy</Link></li>
+              <li><Link to="/support" className="footer-link">Support</Link></li>
             </ul>
           </div>
           <div className="footer-section">
             <h4 className="footer-heading">Services</h4>
             <ul className="footer-links">
-              <li className="footer-link">Pharmacy &amp; Wellness</li>
-              <li className="footer-link">Healthy Food &amp; Drinks</li>
-              <li className="footer-link">Beauty &amp; Skincare</li>
+              <li><Link to="/services/pharmacy" className="footer-link">Pharmacy &amp; Wellness</Link></li>
+              <li><Link to="/services/food" className="footer-link">Healthy Food &amp; Drinks</Link></li>
+              <li><Link to="/services/beauty" className="footer-link">Beauty &amp; Skincare</Link></li>
             </ul>
           </div>
           <div className="footer-section">
@@ -44,6 +44,11 @@ function Footer() {
           <p className="footer-copyright">
             &copy; {new Date().getFullYear()} InstantEase. All rights reserved.
           </p>
+          <div className="footer-legal">
+            <Link to="/privacy-policy" className="footer-link">Privacy Policy</Link>
+            <Link to="/terms" className="footer-link">Terms of Service</Link>
+            <Link to="/legal" className="footer-link">Legal</Link>
+          </div>
         </div>
       </div>
     </footer>
