@@ -1,9 +1,20 @@
 import "./PrivacyPolicy.css";
 
-const EFFECTIVE_DATE = "October 7, 2026";
+const EFFECTIVE_DATE = "October 20, 2026";
 const CONTACT_EMAIL = "instanteaseapp@gmail.com";
 const CONTACT_PHONE = "+234 707 732 3387";
 const CONTACT_ADDRESS = "Lekki, Lagos State, Nigeria";
+
+// Keep in sync with the App Privacy answers in App Store Connect and the Data safety form in Google Play.
+const dataSummary = [
+  { type: "Name", use: "Your account, and so vendors and riders know who the order is for." },
+  { type: "Email address", use: "Account sign-in, receipts, support and important service messages." },
+  { type: "Phone number", use: "Account verification, and so riders and vendors can contact you about an order." },
+  { type: "Precise location", use: "Finding nearby vendors, delivery addresses, rider dispatch and live order tracking." },
+  { type: "Photos", use: "Profile photos, product images, prescriptions, ID documents and proof of delivery." },
+  { type: "Purchase history", use: "Processing orders, refunds, receipts and your order history." },
+  { type: "Device ID", use: "Sending push notifications about your orders (your device's push notification token)." },
+];
 
 const sections = [
   {
@@ -35,7 +46,26 @@ const sections = [
     title: "2. Information We Collect",
     body: (
       <>
-        <h3>2.1 Information you give us</h3>
+        <h3>2.1 Summary</h3>
+        <p>
+          The table below lists the main types of personal data the InstantEase apps collect. All of it is linked to
+          your account. <strong>We do not use any of it to track you</strong> across other companies' apps or
+          websites, and we do not sell it. Sections 2.2 to 2.5 give more detail.
+        </p>
+        <div className="pp-table-wrap">
+          <table className="pp-table">
+            <thead>
+              <tr><th scope="col">Data</th><th scope="col">Why we collect it</th></tr>
+            </thead>
+            <tbody>
+              {dataSummary.map((d) => (
+                <tr key={d.type}><th scope="row">{d.type}</th><td>{d.use}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h3>2.2 Information you give us</h3>
         <ul>
           <li><strong>Account details:</strong> name, phone number, email address, password and profile photo.</li>
           <li><strong>Delivery details (customers):</strong> delivery addresses, delivery instructions and recipient contact details.</li>
@@ -60,7 +90,7 @@ const sections = [
           <li><strong>Communications:</strong> messages, ratings, reviews, support requests and anything you send through our contact form.</li>
         </ul>
 
-        <h3>2.2 Information we collect automatically</h3>
+        <h3>2.3 Information we collect automatically</h3>
         <ul>
           <li>
             <strong>Location:</strong> with your permission, the Customer App uses your device location to suggest
@@ -74,10 +104,10 @@ const sections = [
             <strong>Device and usage data:</strong> device model, operating system, app version, language, IP
             address, crash logs, performance data and how you use app features.
           </li>
-          <li><strong>Push notification token:</strong> used to send you order updates and, if you opt in, promotions.</li>
+          <li><strong>Device ID (push notification token):</strong> a token that lets us send notifications to your device. We use it for order updates and, if you opt in, promotions.</li>
         </ul>
 
-        <h3>2.3 Device permissions</h3>
+        <h3>2.4 Device permissions</h3>
         <p>The apps only ask for a permission when a feature needs it. You can change permissions in your device settings at any time.</p>
         <ul>
           <li><strong>Location:</strong> nearby vendors, delivery addresses, rider dispatch and live order tracking.</li>
@@ -86,7 +116,7 @@ const sections = [
           <li><strong>Phone:</strong> calling the customer, vendor or rider about an active order.</li>
         </ul>
 
-        <h3>2.4 Information from others</h3>
+        <h3>2.5 Information from others</h3>
         <ul>
           <li>Payment providers confirm whether a payment succeeded and send refund status.</li>
           <li>Verification partners may confirm the identity or documents of riders and vendors.</li>

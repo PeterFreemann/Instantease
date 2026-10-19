@@ -56,6 +56,14 @@
 .pp-section a:hover { color: var(--orange-deep); }
 .pp-contact { list-style: none; padding-left: 0 !important; }
 
+.pp-table-wrap { overflow-x: auto; margin-bottom: 1.5rem; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+.pp-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.pp-table th, .pp-table td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+.pp-table tr:last-child th, .pp-table tr:last-child td { border-bottom: none; }
+.pp-table thead th { background: var(--mint-pale); color: var(--forest-deep); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+.pp-table tbody th { font-weight: 600; color: var(--charcoal); white-space: nowrap; }
+.pp-table td { color: #3b5446; }
+
 @media (max-width: 900px) {
   .pp-container { grid-template-columns: 1fr; gap: 2rem; padding: 0 1.5rem; }
   .pp-hero-inner { padding: 0 1.5rem; }
