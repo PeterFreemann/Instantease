@@ -1,3 +1,42 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* InstantEase design tokens, taken from the mobile apps' shared theme
+   (@instantease/instantease-mobile-package tailwind.config.js). */
+@theme {
+  --font-figtree: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-ie-dark: #003e29;
+  --color-ie-green: #008054;
+  --color-ie-green-100: #cce6dd;
+  --color-ie-green-200: #99ccbb;
+  --color-ie-green-300: #66b398;
+  --color-ie-green-400: #339976;
+  --color-ie-green-600: #006643;
+  --color-ie-green-700: #004d32;
+  --color-ie-green-800: #003322;
+  --color-ie-green-900: #001a11;
+  --color-ie-orange: #ff7108;
+  --color-ie-burnt: #c65827;
+  --color-ie-burnt-dark: #a1461e; /* burnt orange darkened for AA text on white and peach */
+
+  --color-ie-ink: #0f172a;
+  --color-ie-slate: #475467;
+  --color-ie-muted: #6b7280;
+  --color-ie-line: #e5e7eb;
+  --color-ie-mist: #f9fafb;
+
+  --color-cat-pharmacy: #deede8;
+  --color-cat-food: #cff9fe;
+  --color-cat-beauty: #ffe5d1;
+
+  --animate-marquee: marquee 45s linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
 .app {
   display: flex;
   flex-direction: column;
