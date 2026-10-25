@@ -1,35 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight, BadgeCheck, Bike, ChevronDown, CreditCard, Download, Headset, Leaf,
-  MapPin, Navigation, ShieldCheck, Sparkles, Store,
-} from "lucide-react";
+import { ArrowRight, BadgeCheck, Bike, ChevronDown, MapPin, Store } from "lucide-react";
 import { apps, areas, screens } from "../config/site";
 import StoreButtons from "../components/home/StoreButtons";
-import { DeliveryCodeSketch, HomeScreenSketch, PhoneFrame, TrackingScreenSketch } from "../components/home/PhoneFrame";
-
-const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ie-orange";
-const container = "mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-12";
-
-
-// Contour background: the app's own PNG on phones, a matching SVG on wider screens.
-function Contour({ className = "" }) {
-  return (
-    <div aria-hidden="true" className={`pointer-events-none absolute inset-0 ${className}`}>
-      <div className="absolute inset-0 bg-[url('/images/app/contour.webp')] bg-cover bg-center md:hidden" />
-      <div className="absolute inset-0 hidden bg-[url('/images/contour.svg')] bg-cover bg-center md:block" />
-    </div>
-  );
-}
-
-function Eyebrow({ children, tone = "light" }) {
-  const t = tone === "dark" ? "bg-white/10 text-ie-green-100" : "bg-ie-green-100 text-ie-green-700";
-  return <p className={`m-0 mb-3 inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] ${t}`}>{children}</p>;
-}
-
-function SectionTitle({ children, className = "" }) {
-  return <h2 className={`m-0 text-3xl font-extrabold leading-tight tracking-tight text-ie-ink sm:text-4xl ${className}`}>{children}</h2>;
-}
+import { HomeScreenSketch, PhoneFrame } from "../components/home/PhoneFrame";
+import {
+  Categories, Contour, CtaBand, Eyebrow, Faq, FeatureTile, SectionTitle, Steps, Tracking, container, focusRing,
+} from "../components/home/sections";
+import { customerFeatures as features, customerSteps, faqs } from "../components/home/content";
 
 function GetAppMenu() {
   const [open, setOpen] = useState(false);
@@ -86,12 +64,12 @@ function Hero() {
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <GetAppMenu />
-            <a
-              href="#vendors"
+            <Link
+              to="/vendors"
               className={`flex min-h-13 items-center gap-2 rounded-full border border-white/40 px-7 text-base font-semibold text-white transition-colors hover:bg-white/10 ${focusRing}`}
             >
               Become a vendor <ArrowRight size={18} aria-hidden="true" />
-            </a>
+            </Link>
           </div>
           <ul className="m-0 mt-8 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 text-sm text-ie-green-100">
             {["Verified pharmacies", "Secure Paystack checkout", "Live rider tracking"].map((t) => (
@@ -108,144 +86,6 @@ function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-const categories = [
-  {
-    slug: "pharmacy", title: "Pharmacy & Wellness", bg: "bg-cat-pharmacy", img: "/images/app/pharmacy-icon.png", imgW: 48, imgH: 49,
-    desc: "Over-the-counter medicines, prescriptions, vitamins and wellness essentials from licensed pharmacies.",
-  },
-  {
-    slug: "food", title: "Healthy Food & Drinks", bg: "bg-cat-food", img: "/images/app/restaurant-icon.png", imgW: 57, imgH: 57,
-    desc: "Fresh meals, smoothies, produce and better-for-you snacks from vetted food vendors.",
-  },
-  {
-    slug: "beauty", title: "Beauty & Skincare", bg: "bg-cat-beauty", img: "/images/app/beauty-icon.png", imgW: 96, imgH: 47,
-    desc: "Skincare, makeup, hair care and fragrance from verified beauty retailers.",
-  },
-];
-
-function Categories() {
-  return (
-    <section id="customers" className="scroll-mt-20 bg-white py-16 sm:py-24">
-      <div className={container}>
-        <Eyebrow>For customers</Eyebrow>
-        <SectionTitle>Everything for a healthier you, in one app.</SectionTitle>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
-          {categories.map((c) => (
-            <Link
-              key={c.slug}
-              to={`/services/${c.slug}`}
-              className={`group flex flex-col rounded-3xl ${c.bg} p-6 transition-transform hover:-translate-y-1 sm:p-7 ${focusRing}`}
-            >
-              <div className="flex h-14 items-center">
-                <img src={c.img} alt="" width={c.imgW} height={c.imgH} loading="lazy" className="h-auto max-h-14 w-auto" />
-              </div>
-              <h3 className="m-0 mt-6 text-xl font-bold text-ie-ink">{c.title}</h3>
-              <p className="m-0 mt-2 flex-1 leading-relaxed text-ie-slate">{c.desc}</p>
-              <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-ie-green-700">
-                Explore <ArrowRight size={18} aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
-              </span>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const steps = [
-  { Icon: Download, title: "Download the app", text: "Get InstantEase on your phone and set your delivery address." },
-  { Icon: Store, title: "Choose a store near you", text: "Browse pharmacies, healthy food spots and beauty stores close to you." },
-  { Icon: CreditCard, title: "Pay securely with Paystack", text: "Pay by card, bank transfer, bank or USSD at checkout." },
-  { Icon: Bike, title: "Track your rider to your door", text: "Follow your order live and share your delivery code when it arrives." },
-];
-
-function HowItWorks() {
-  return (
-    <section id="how-it-works" className="scroll-mt-20 bg-ie-mist py-16 sm:py-24">
-      <div className={container}>
-        <Eyebrow>How it works</Eyebrow>
-        <SectionTitle>From your phone to your door in four steps.</SectionTitle>
-        <ol className="m-0 mt-10 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step, i) => {
-            const { Icon, title, text } = step;
-            return (
-            <li key={title} className="rounded-2xl border border-ie-line bg-white p-6">
-              <div className="flex items-center justify-between">
-                <span className="flex size-12 items-center justify-center rounded-full bg-ie-green-100 text-ie-green">
-                  <Icon size={24} aria-hidden="true" />
-                </span>
-                <span className="text-sm font-bold text-ie-green" aria-hidden="true">0{i + 1}</span>
-              </div>
-              <h3 className="m-0 mt-5 text-lg font-bold text-ie-ink">{title}</h3>
-              <p className="m-0 mt-2 leading-relaxed text-ie-slate">{text}</p>
-            </li>
-            );
-          })}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
-function Tracking() {
-  return (
-    <section id="tracking" className="relative scroll-mt-20 overflow-hidden bg-ie-dark py-16 text-white sm:py-24">
-      <Contour className="opacity-70" />
-      <div className={`${container} relative grid items-center gap-12 lg:grid-cols-2`}>
-        <div>
-          <Eyebrow tone="dark">Live tracking</Eyebrow>
-          <h2 className="m-0 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-            Watch your order move, right to your gate.
-          </h2>
-          <p className="m-0 mt-4 max-w-lg text-lg leading-relaxed text-white/85">
-            See when the store confirms your order, when it's being prepared, and where your rider is on the map.
-          </p>
-          <div className="mt-8 max-w-lg rounded-2xl border border-white/20 bg-white/10 p-6">
-            <h3 className="m-0 flex items-center gap-2 text-lg font-bold">
-              <ShieldCheck size={22} aria-hidden="true" className="text-ie-green-200" /> Your delivery code keeps orders safe
-            </h3>
-            <p className="m-0 mt-2 leading-relaxed text-white/85">
-              When a rider is assigned, the app shows you a private 6-digit delivery code. Give it to the rider only when
-              your order is in your hands. The rider enters it to complete the delivery, so your order can't be marked
-              delivered without you.
-            </p>
-          </div>
-        </div>
-        <div className="flex justify-center gap-4 sm:gap-6">
-          <PhoneFrame src={screens.tracking} alt="InstantEase order tracking screen" size="sm">
-            <TrackingScreenSketch />
-          </PhoneFrame>
-          <PhoneFrame src={screens.deliveryCode} alt="InstantEase delivery code screen" size="sm" className="mt-10">
-            <DeliveryCodeSketch />
-          </PhoneFrame>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const features = [
-  { Icon: BadgeCheck, title: "Verified pharmacies", text: "Every pharmacy is checked and licensed before it can sell on InstantEase." },
-  { Icon: Leaf, title: "Healthy meals", text: "Fresh, balanced meals and drinks from vetted food vendors." },
-  { Icon: Sparkles, title: "Beauty brands", text: "Skincare, makeup and hair care from verified beauty retailers." },
-  { Icon: Navigation, title: "Live tracking", text: "See where your rider is, from pickup to your door." },
-  { Icon: CreditCard, title: "Secure payments", text: "Checkout runs on Paystack: card, transfer, bank or USSD." },
-  { Icon: Headset, title: "Real support", text: "Reach our team in the app, by email or by phone if anything goes wrong." },
-];
-
-function FeatureTile(props) {
-  const { Icon, title, text, className = "" } = props;
-  return (
-    <div className={`rounded-2xl border border-ie-line bg-white p-6 ${className}`}>
-      <span className="flex size-11 items-center justify-center rounded-xl bg-ie-green text-white">
-        <Icon size={22} aria-hidden="true" />
-      </span>
-      <h3 className="m-0 mt-4 text-lg font-bold text-ie-ink">{title}</h3>
-      <p className="m-0 mt-1.5 leading-relaxed text-ie-slate">{text}</p>
-    </div>
   );
 }
 
@@ -275,7 +115,7 @@ function WhyInstantEase() {
 }
 
 function JoinCard(props) {
-  const { id, Icon, eyebrow, title, text, cta, app, tone } = props;
+  const { id, Icon, eyebrow, title, text, cta, app, tone, to } = props;
   const dark = tone === "dark";
   return (
     <article
@@ -290,6 +130,12 @@ function JoinCard(props) {
         <p className={`m-0 mt-6 text-sm font-bold uppercase tracking-[0.12em] ${dark ? "text-ie-green-200" : "text-ie-burnt-dark"}`}>{eyebrow}</p>
         <h3 className="m-0 mt-2 text-2xl font-extrabold leading-tight sm:text-3xl">{title}</h3>
         <p className={`m-0 mt-3 flex-1 text-lg leading-relaxed ${dark ? "text-white/85" : "text-ie-slate"}`}>{text}</p>
+        <Link
+          to={to}
+          className={`mt-6 inline-flex items-center gap-1.5 self-start rounded-sm font-semibold underline-offset-4 hover:underline ${dark ? "text-white" : "text-ie-green-700"} ${focusRing}`}
+        >
+          Learn more <ArrowRight size={18} aria-hidden="true" />
+        </Link>
         <p className="m-0 mt-8 font-bold">{cta}</p>
         <StoreButtons app={app} only={["apk", "appStore"]} tone={dark ? "dark" : "light"} className="mt-3" />
       </div>
@@ -302,11 +148,11 @@ function VendorsAndRiders() {
     <section className="bg-ie-mist py-16 sm:py-24">
       <div className={`${container} grid gap-5 lg:grid-cols-2`}>
         <JoinCard
-          id="vendors" Icon={Store} eyebrow="For vendors" title="Sell on InstantEase" app={apps.vendor} cta="Start selling"
+          id="vendors" Icon={Store} eyebrow="For vendors" title="Sell on InstantEase" app={apps.vendor} cta="Start selling" to="/vendors"
           text="Reach more customers across Lagos. Take orders, manage your stock and get paid, all from the Vendor app."
         />
         <JoinCard
-          id="riders" Icon={Bike} eyebrow="For riders" title="Ride with InstantEase" app={apps.rider} cta="Start riding" tone="dark"
+          id="riders" Icon={Bike} eyebrow="For riders" title="Ride with InstantEase" app={apps.rider} cta="Start riding" tone="dark" to="/riders"
           text="Earn on your own schedule. Get delivery requests near you, clear directions and a record of your earnings."
         />
       </div>
@@ -341,76 +187,14 @@ function Areas() {
 
 function DownloadBand() {
   return (
-    <section id="download" className="relative scroll-mt-20 overflow-hidden bg-ie-green-600 py-16 text-white sm:py-20">
-      <Contour className="opacity-50" />
-      <div className={`${container} relative`}>
-        <h2 className="m-0 max-w-2xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
-          Get the InstantEase app.
-        </h2>
-        <p className="m-0 mt-3 max-w-xl text-lg text-white/90">Order, pay and track in one place.</p>
-        <StoreButtons app={apps.customer} tone="dark" className="mt-8" />
-        <p className="m-0 mt-8 text-white/90">
-          Selling or riding with us?{" "}
-          <a href={apps.vendor.apk} download className={`font-semibold text-white underline underline-offset-4 ${focusRing}`}>Vendor app (APK)</a>
-          {" · "}
-          <a href={apps.rider.apk} download className={`font-semibold text-white underline underline-offset-4 ${focusRing}`}>Rider app (APK)</a>
-        </p>
-      </div>
-    </section>
-  );
-}
-
-// TODO: confirm every answer below before going live.
-const faqs = [
-  {
-    q: "How do I place an order?",
-    a: "Download the InstantEase app, set your delivery address, then browse pharmacies, healthy food vendors and beauty stores near you. Add items to your cart and check out.",
-  },
-  {
-    q: "How much is delivery?",
-    a: "Delivery fees depend on distance and order size. You'll see the exact fee at checkout before you pay.",
-  },
-  {
-    q: "How can I pay?",
-    a: "Checkout runs on Paystack, so you can pay by card, bank transfer, bank or USSD.",
-  },
-  {
-    q: "Can I order prescription medicines?",
-    a: "Yes. Upload a valid prescription in the app and a licensed pharmacy will review it before dispensing.",
-  },
-  {
-    q: "What if something is wrong with my order?",
-    a: "Report it from the order screen in the app or contact support with your order number. If a refund is approved, it goes back to your original payment method.",
-  },
-  {
-    q: "How do I become a vendor or rider?",
-    a: "Download the Vendor app or the Rider app, sign up and upload the documents it asks for. We review applications, usually within 48 hours.",
-  },
-];
-
-function Faq() {
-  return (
-    <section id="faq" className="scroll-mt-20 bg-ie-mist py-16 sm:py-24">
-      <div className="mx-auto w-full max-w-[860px] px-4 sm:px-6">
-        <Eyebrow>FAQ</Eyebrow>
-        <SectionTitle>Questions, answered.</SectionTitle>
-        <div className="mt-8 space-y-3">
-          {faqs.map(({ q, a }) => (
-            <details key={q} className="group rounded-2xl border border-ie-line bg-white">
-              <summary className={`flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-4 text-lg font-semibold text-ie-ink [&::-webkit-details-marker]:hidden ${focusRing}`}>
-                {q}
-                <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-ie-green transition-transform group-open:rotate-180" />
-              </summary>
-              <p className="m-0 px-5 pb-5 leading-relaxed text-ie-slate">{a}</p>
-            </details>
-          ))}
-        </div>
-        <p className="m-0 mt-6 text-ie-slate">
-          More questions? Visit{" "}
-          <Link to="/support" className={`font-semibold text-ie-green-700 underline underline-offset-4 ${focusRing}`}>Support</Link>.
-        </p>
-      </div>
-    </section>
+    <CtaBand id="download" title="Get the InstantEase app." text="Order, pay and track in one place." app={apps.customer}>
+      <p className="m-0 mt-8 text-white/90">
+        Selling or riding with us?{" "}
+        <a href={apps.vendor.apk} download className={`font-semibold text-white underline underline-offset-4 ${focusRing}`}>Vendor app (APK)</a>
+        {" · "}
+        <a href={apps.rider.apk} download className={`font-semibold text-white underline underline-offset-4 ${focusRing}`}>Rider app (APK)</a>
+      </p>
+    </CtaBand>
   );
 }
 
@@ -418,14 +202,14 @@ function Home() {
   return (
     <div className="font-figtree text-ie-ink">
       <Hero />
-      <Categories />
-      <HowItWorks />
+      <Categories id="customers" />
+      <Steps id="how-it-works" title="From your phone to your door in four steps." steps={customerSteps} />
       <Tracking />
       <WhyInstantEase />
       <VendorsAndRiders />
       <Areas />
       <DownloadBand />
-      <Faq />
+      <Faq items={faqs} />
     </div>
   );
 }
