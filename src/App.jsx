@@ -13,12 +13,15 @@ import Service from './pages/Service';
 import './App.css';
 
 function ScrollToTop() {
-  const { pathname, hash } = useLocation();
+  // `key` changes on every navigation, so clicking the same #section link twice still scrolls.
+  // Sections set scroll-margin-top so the sticky header doesn't cover their titles;
+  // smooth scrolling comes from CSS and is skipped when the user prefers reduced motion.
+  const { pathname, hash, key } = useLocation();
   useEffect(() => {
     const target = hash && document.getElementById(hash.slice(1));
     if (target) target.scrollIntoView();
     else window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [pathname, hash]);
+  }, [pathname, hash, key]);
   return null;
 }
 

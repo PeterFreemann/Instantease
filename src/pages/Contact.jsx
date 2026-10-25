@@ -4,18 +4,16 @@ import "./Contact.css";
 function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
-  const revealRefs = useRef([]);
+  const rootRef = useRef(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
       { threshold: 0.1 }
     );
-    revealRefs.current.forEach((el) => el && obs.observe(el));
+    rootRef.current.querySelectorAll(".ct-reveal").forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
-
-  const r = (i) => (el) => { revealRefs.current[i] = el; };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +30,7 @@ function Contact() {
   };
 
   return (
-    <div className="contact">
+    <div className="contact" ref={rootRef}>
 
       <section className="ct-hero">
         <div className="ct-hero-img" />
@@ -49,7 +47,7 @@ function Contact() {
         <div className="ct-container">
           <div className="ct-grid">
 
-            <div className="ct-info ct-reveal" ref={r(0)}>
+            <div className="ct-info ct-reveal">
               <div className="ct-info-header">
                 <span className="ct-section-tag">Contact Info</span>
                 <h2 className="ct-info-title">Get in touch.</h2>
@@ -81,7 +79,7 @@ function Contact() {
               </div>
             </div>
 
-            <div className="ct-form-wrap ct-reveal" ref={r(1)}>
+            <div className="ct-form-wrap ct-reveal">
               <div className="ct-form-header">
                 <span className="ct-section-tag">Send a message</span>
                 <h2 className="ct-form-title">Write to us.</h2>
@@ -144,7 +142,7 @@ function Contact() {
 
       <section className="ct-faq">
         <div className="ct-container">
-          <div className="ct-faq-header ct-reveal" ref={r(2)}>
+          <div className="ct-faq-header ct-reveal">
             <span className="ct-section-tag">FAQ</span>
             <h2 className="ct-faq-title">Common questions.</h2>
           </div>
@@ -155,7 +153,7 @@ function Contact() {
               { q: "How can I track my order?", a: "Once your order is confirmed, you can track it in real-time through the Customer App. You will receive updates at every stage of delivery." },
               { q: "Do you operate in my area?", a: "Check the Customer App to see if we are available in your location. We are constantly expanding to new areas across Nigeria." },
             ].map((faq, i) => (
-              <div key={i} className="ct-faq-card ct-reveal" ref={r(3 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
+              <div key={i} className="ct-faq-card ct-reveal" style={{ transitionDelay: i * 0.1 + "s" }}>
                 <div className="ct-faq-num">0{i + 1}</div>
                 <h3 className="ct-faq-q">{faq.q}</h3>
                 <p className="ct-faq-a">{faq.a}</p>

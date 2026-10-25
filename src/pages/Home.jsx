@@ -1,384 +1,433 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  ArrowRight, BadgeCheck, Bike, ChevronDown, CreditCard, Download, Headset, Leaf,
+  MapPin, Navigation, ShieldCheck, Sparkles, Store,
+} from "lucide-react";
+import { apps, areas, screens } from "../config/site";
+import StoreButtons from "../components/home/StoreButtons";
+import { DeliveryCodeSketch, HomeScreenSketch, PhoneFrame, TrackingScreenSketch } from "../components/home/PhoneFrame";
 
-const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
-  :root {
-    --forest: #2d7a4f; --forest-deep: #1a5c38; --forest-mid: #3d9c65;
-    --forest-light: #52c47d; --mint: #a8e6c2; --mint-pale: #e6f7ee;
-    --orange: #f97316; --orange-deep: #ea6000; --orange-pale: #fff4ed;
-    --cream: #f8fcf9; --charcoal: #1a2e22; --muted: #5a7a65; --border: #d4eadb;
-  }
-  body { font-family: 'DM Sans', sans-serif; }
-  .ie-home { min-height:100vh; background:var(--cream); overflow-x:hidden; }
+const focusRing = "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ie-orange";
+const container = "mx-auto w-full max-w-[1200px] px-4 sm:px-6 lg:px-12";
 
-  .ie-hero { min-height:100vh; background:var(--forest-deep); position:relative; display:flex; align-items:center; overflow:hidden; }
-  .ie-hero-bg { position:absolute; inset:0; background-image:url('/instant.jpg'); background-size:cover; background-position:center; }
-  .ie-hero-overlay { position:absolute; inset:0; background:linear-gradient(135deg, rgba(26,92,56,0.82) 0%, rgba(45,122,79,0.6) 50%, rgba(26,92,56,0.75) 100%); }
-  .ie-hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(168,240,208,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(168,240,208,0.04) 1px, transparent 1px); background-size:60px 60px; }
-  .ie-hero-orb { position:absolute; border-radius:50%; filter:blur(80px); animation:float 8s ease-in-out infinite; }
-  .ie-hero-orb-1 { width:500px; height:500px; background:rgba(249,115,22,0.18); top:-100px; right:-100px; }
-  .ie-hero-orb-2 { width:300px; height:300px; background:rgba(82,196,125,0.15); bottom:0; left:30%; animation-delay:-4s; }
-  @keyframes float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
 
-  .ie-hero-inner { position:relative; z-index:2; max-width:1200px; margin:0 auto; padding:0 3rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; width:100%; }
-  .ie-hero-badge { display:inline-flex; align-items:center; gap:0.5rem; background:rgba(249,115,22,0.15); border:1px solid rgba(249,115,22,0.35); color:#fbb97d; padding:0.4rem 1rem; border-radius:100px; font-size:0.8rem; font-weight:500; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:1.75rem; animation:fadeUp 0.6s ease both; }
-  .ie-hero-badge::before { content:''; width:6px; height:6px; background:#f97316; border-radius:50%; }
-  .ie-hero-title { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,4.5vw,4.5rem); font-weight:900; line-height:1.08; color:white; letter-spacing:-0.02em; margin-bottom:1.5rem; animation:fadeUp 0.6s ease 0.1s both; }
-  .ie-hero-title em { font-style:italic; color:#fbb97d; }
-  .ie-hero-desc { font-size:1.1rem; line-height:1.75; color:rgba(255,255,255,0.7); max-width:480px; margin-bottom:2.5rem; font-weight:300; animation:fadeUp 0.6s ease 0.2s both; }
-  .ie-hero-actions { display:flex; gap:1rem; align-items:center; animation:fadeUp 0.6s ease 0.3s both; }
-  .ie-btn-primary { background:var(--orange); color:white; border:none; padding:0.9rem 2.25rem; border-radius:100px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:600; cursor:pointer; transition:all 0.25s ease; display:flex; align-items:center; gap:0.5rem; }
-  .ie-btn-primary:hover { background:var(--orange-deep); transform:translateY(-2px); box-shadow:0 8px 30px rgba(249,115,22,0.4); }
-  .ie-btn-ghost { background:transparent; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); padding:0.9rem 2.25rem; border-radius:100px; font-family:'DM Sans',sans-serif; font-size:0.95rem; font-weight:500; cursor:pointer; transition:all 0.25s ease; }
-  .ie-btn-ghost:hover { border-color:rgba(255,255,255,0.6); color:white; transform:translateY(-2px); }
-  .ie-hero-stats { display:flex; gap:2.5rem; margin-top:3.5rem; padding-top:2.5rem; border-top:1px solid rgba(255,255,255,0.1); animation:fadeUp 0.6s ease 0.4s both; }
-  .ie-stat-val { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:700; color:white; line-height:1; }
-  .ie-stat-val span { color:#fbb97d; }
-  .ie-stat-label { font-size:0.8rem; color:rgba(255,255,255,0.5); margin-top:0.25rem; letter-spacing:0.03em; text-transform:uppercase; }
-  .ie-hero-visual { display:flex; justify-content:center; align-items:center; animation:fadeUp 0.7s ease 0.2s both; }
-  .ie-phones { position:relative; width:320px; height:520px; }
-  .ie-phone { position:absolute; width:200px; height:380px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter:blur(20px); border-radius:32px; overflow:hidden; transition:transform 0.4s ease; }
-  .ie-phone:hover { transform:scale(1.03) translateY(-8px) !important; }
-  .ie-phone-1 { top:0; left:0; transform:rotate(-8deg) translateY(20px); }
-  .ie-phone-2 { top:60px; left:80px; transform:rotate(5deg); z-index:2; background:rgba(255,255,255,0.09); }
-  .ie-phone-3 { top:20px; right:0; transform:rotate(12deg) translateY(40px); }
-  .ie-phone-screen { padding:1.25rem 1rem; height:100%; display:flex; flex-direction:column; gap:0.6rem; }
-  .ie-phone-bar { height:8px; border-radius:4px; background:rgba(168,240,208,0.4); }
-  .ie-phone-bar.short { width:60%; }
-  .ie-phone-bar.medium { width:80%; background:rgba(255,255,255,0.15); }
-  .ie-phone-card-mini { background:rgba(168,240,208,0.1); border-radius:12px; padding:0.75rem; margin-top:0.5rem; display:flex; align-items:center; gap:0.6rem; }
-  .ie-phone-dot { width:28px; height:28px; border-radius:8px; background:var(--orange); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.8rem; }
-  .ie-phone-lines { flex:1; }
-  .ie-phone-line { height:6px; border-radius:3px; background:rgba(255,255,255,0.2); margin-bottom:4px; }
-  .ie-phone-line.s { width:50%; }
-
-  .ie-section { padding:7rem 3rem; max-width:1200px; margin:0 auto; }
-  .ie-section-tag { display:inline-block; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--forest-deep); background:var(--mint-pale); padding:0.35rem 0.9rem; border-radius:100px; margin-bottom:1.25rem; }
-  .ie-section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:800; color:var(--charcoal); line-height:1.15; letter-spacing:-0.02em; margin-bottom:0.75rem; }
-  .ie-section-sub { font-size:1.05rem; color:var(--muted); line-height:1.7; font-weight:300; max-width:520px; }
-  .ie-section-header { display:grid; grid-template-columns:1fr auto; align-items:end; margin-bottom:4rem; gap:2rem; }
-
-  .ie-categories-wrap { background:white; padding:7rem 0; }
-  .ie-categories-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-  .ie-cat-card { text-decoration:none; position:relative; border-radius:24px; overflow:hidden; cursor:pointer; transition:transform 0.35s ease, box-shadow 0.35s ease; aspect-ratio:0.85; display:flex; flex-direction:column; justify-content:flex-end; }
-  .ie-cat-card:hover { transform:translateY(-8px); box-shadow:0 30px 60px rgba(0,62,41,0.2); }
-  .ie-cat-bg { position:absolute; inset:0; transition:transform 0.5s ease; }
-  .ie-cat-card:hover .ie-cat-bg { transform:scale(1.06); }
-  .ie-cat-bg-1 { background-image:url('https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=80'); background-size:cover; background-position:center; }
-  .ie-cat-bg-2 { background-image:url('/food.jpg'); background-size:cover; background-position:center; }
-  .ie-cat-bg-3 { background-image:url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80'); background-size:cover; background-position:center; }
-  .ie-cat-bg-1::after, .ie-cat-bg-2::after, .ie-cat-bg-3::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(26,46,34,0.82) 0%,rgba(26,46,34,0.2) 60%,transparent 100%); }
-  .ie-cat-pattern { position:absolute; inset:0; opacity:0.08; background-image:radial-gradient(circle,rgba(168,240,208,1) 1px,transparent 1px); background-size:24px 24px; }
-  .ie-cat-emoji { position:absolute; top:2rem; right:2rem; font-size:4rem; opacity:0.25; transition:opacity 0.3s, transform 0.3s; }
-  .ie-cat-card:hover .ie-cat-emoji { opacity:0.5; transform:scale(1.1) rotate(-5deg); }
-  .ie-cat-content { position:relative; z-index:2; padding:2rem; background:linear-gradient(to top,rgba(0,26,17,0.9) 0%,transparent 100%); }
-  .ie-cat-label { display:inline-block; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--mint); font-weight:600; margin-bottom:0.5rem; }
-  .ie-cat-title { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:white; line-height:1.2; margin-bottom:0.75rem; }
-  .ie-cat-desc { font-size:0.875rem; color:rgba(255,255,255,0.65); line-height:1.6; font-weight:300; }
-  .ie-cat-arrow { display:inline-flex; align-items:center; gap:0.4rem; color:var(--mint); font-size:0.85rem; font-weight:600; margin-top:1rem; opacity:0; transform:translateX(-8px); transition:all 0.3s ease; }
-  .ie-cat-card:hover .ie-cat-arrow { opacity:1; transform:translateX(0); }
-
-  .ie-how-wrap { background:var(--cream); }
-  .ie-how-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; position:relative; }
-  .ie-how-grid::before { content:''; position:absolute; top:40px; left:calc(12.5% + 20px); right:calc(12.5% + 20px); height:1px; background:linear-gradient(90deg,transparent,var(--mint),var(--orange),var(--mint),transparent); z-index:0; }
-  .ie-step { text-align:center; position:relative; z-index:1; }
-  .ie-step-num { width:80px; height:80px; border-radius:50%; background:white; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:700; color:var(--forest); margin:0 auto 1.5rem; transition:all 0.3s ease; }
-  .ie-step:hover .ie-step-num { background:var(--forest); color:var(--mint); border-color:var(--forest); transform:scale(1.1); box-shadow:0 8px 30px rgba(0,62,41,0.25); }
-  .ie-step-title { font-size:1.05rem; font-weight:600; color:var(--charcoal); margin-bottom:0.6rem; }
-  .ie-step-desc { font-size:0.875rem; color:var(--muted); line-height:1.65; font-weight:300; }
-
-  .ie-apps-wrap { background:var(--forest-deep); padding:7rem 0; }
-  .ie-apps-wrap .ie-section-title { color:white; }
-  .ie-apps-wrap .ie-section-sub { color:rgba(255,255,255,0.55); }
-  .ie-apps-wrap .ie-section-tag { background:rgba(168,240,208,0.12); color:var(--mint); }
-  .ie-apps-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-  .ie-app-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:2.5rem; transition:all 0.35s ease; position:relative; overflow:hidden; }
-  .ie-app-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--mint),transparent); opacity:0; transition:opacity 0.3s; }
-  .ie-app-card:hover { background:rgba(255,255,255,0.07); border-color:rgba(168,240,208,0.2); transform:translateY(-6px); }
-  .ie-app-card:hover::before { opacity:1; }
-  .ie-app-icon-wrap { width:64px; height:64px; border-radius:18px; background:rgba(168,240,208,0.1); border:1px solid rgba(168,240,208,0.2); display:flex; align-items:center; justify-content:center; font-size:2rem; margin-bottom:1.75rem; transition:all 0.3s; }
-  .ie-app-card:hover .ie-app-icon-wrap { background:rgba(168,240,208,0.18); transform:scale(1.05); }
-  .ie-app-name { font-size:1.3rem; font-weight:600; color:white; margin-bottom:0.75rem; font-family:'Playfair Display',serif; }
-  .ie-app-desc { font-size:0.9rem; color:rgba(255,255,255,0.5); line-height:1.7; font-weight:300; margin-bottom:2rem; }
-  .ie-app-features { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
-  .ie-app-features li { display:flex; align-items:center; gap:0.6rem; font-size:0.85rem; color:rgba(255,255,255,0.65); }
-  .ie-app-download { display:inline-flex; align-items:center; gap:0.5rem; margin-top:2rem; background:var(--orange); color:white; padding:0.8rem 1.75rem; border-radius:100px; font-size:0.9rem; font-weight:600; text-decoration:none; transition:all 0.25s ease; }
-  .ie-app-download:hover { background:var(--orange-deep); transform:translateY(-2px); box-shadow:0 8px 30px rgba(249,115,22,0.4); }
-  .ie-check { width:18px; height:18px; border-radius:50%; background:rgba(168,240,208,0.12); border:1px solid rgba(168,240,208,0.3); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:var(--mint); flex-shrink:0; }
-
-  .ie-trust-wrap { background:white; padding:7rem 0; }
-  .ie-trust-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
-  .ie-trust-card { padding:2.5rem; border-radius:20px; border:1px solid var(--border); background:var(--cream); transition:all 0.3s ease; }
-  .ie-trust-card:hover { border-color:var(--orange); box-shadow:0 12px 40px rgba(249,115,22,0.1); transform:translateY(-4px); }
-  .ie-trust-icon { font-size:2rem; margin-bottom:1.25rem; }
-  .ie-trust-title { font-size:1.1rem; font-weight:600; color:var(--charcoal); margin-bottom:0.75rem; }
-  .ie-trust-text { font-size:0.9rem; color:var(--muted); line-height:1.7; font-weight:300; }
-
-  .ie-cta-wrap { background:var(--cream); padding:7rem 3rem; }
-  .ie-cta-inner { max-width:1200px; margin:0 auto; background:linear-gradient(135deg,var(--forest-deep) 0%,var(--forest-mid) 60%,#007a50 100%); border-radius:32px; padding:5rem 4rem; display:grid; grid-template-columns:1fr auto; align-items:center; gap:3rem; position:relative; overflow:hidden; }
-  .ie-cta-inner::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(168,240,208,0.06) 1px,transparent 1px); background-size:32px 32px; }
-  .ie-cta-orb { position:absolute; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle,rgba(168,240,208,0.12),transparent 70%); right:-100px; top:-100px; pointer-events:none; }
-  .ie-cta-text { position:relative; z-index:1; }
-  .ie-cta-tag { display:inline-block; font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; color:var(--mint); margin-bottom:1rem; }
-  .ie-cta-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,3vw,2.8rem); font-weight:800; color:white; line-height:1.15; letter-spacing:-0.02em; margin-bottom:0.75rem; }
-  .ie-cta-title em { font-style:italic; color:var(--mint); }
-  .ie-cta-sub { font-size:1rem; color:rgba(255,255,255,0.6); line-height:1.7; font-weight:300; }
-  .ie-cta-actions { display:flex; flex-direction:column; gap:0.75rem; position:relative; z-index:1; flex-shrink:0; }
-  .ie-dl-btn { display:flex; align-items:center; gap:0.75rem; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:white; padding:0.9rem 1.5rem; border-radius:14px; cursor:pointer; transition:all 0.25s ease; font-family:'DM Sans',sans-serif; min-width:180px; text-decoration:none; }
-  .ie-dl-btn:hover { background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.4); transform:translateX(4px); }
-  .ie-dl-btn-icon { font-size:1.5rem; }
-  .ie-dl-btn-sub { font-size:0.65rem; opacity:0.6; line-height:1; margin-bottom:0.2rem; display:block; }
-  .ie-dl-btn-main { font-size:0.95rem; font-weight:600; line-height:1; display:block; }
-
-  .ie-img-strip { background:var(--cream); padding:0 3rem 7rem; }
-  .ie-img-strip-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1.2fr 1fr 1.2fr; gap:1.25rem; align-items:end; }
-  .ie-img-item { border-radius:20px; overflow:hidden; position:relative; height:260px; }
-  .ie-img-item-tall { height:340px; }
-  .ie-img-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease; display:block; }
-  .ie-img-item:hover img { transform:scale(1.06); }
-  .ie-img-caption { position:absolute; bottom:0; left:0; right:0; padding:1rem 1.25rem 1.1rem; background:linear-gradient(to top,rgba(0,26,17,0.85),transparent); color:rgba(255,255,255,0.9); font-size:0.8rem; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; }
-
-  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-  .ie-reveal { opacity:0; transform:translateY(32px); transition:opacity 0.7s ease, transform 0.7s ease; }
-  .ie-reveal.visible { opacity:1; transform:translateY(0); }
-
-  @media(max-width:1024px){
-    .ie-hero-inner{grid-template-columns:1fr} .ie-hero-visual{display:none}
-    .ie-categories-grid,.ie-apps-grid,.ie-trust-grid{grid-template-columns:1fr 1fr}
-    .ie-how-grid{grid-template-columns:repeat(2,1fr)} .ie-how-grid::before{display:none}
-  }
-  @media(max-width:768px){
-    .ie-nav{padding:1rem 1.5rem} .ie-nav.scrolled{padding:0.75rem 1.5rem} .ie-nav-links{display:none}
-    .ie-hero-inner,.ie-section{padding-left:1.5rem;padding-right:1.5rem}
-    .ie-section{padding-top:5rem;padding-bottom:5rem}
-    .ie-categories-grid,.ie-apps-grid,.ie-trust-grid,.ie-how-grid{grid-template-columns:1fr}
-    .ie-section-header{grid-template-columns:1fr}
-    .ie-cta-inner{grid-template-columns:1fr;padding:3rem 2rem} .ie-cta-wrap{padding:4rem 1.5rem}
-    .ie-footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2.5rem 1.5rem}
-    .ie-hero-stats{gap:1.5rem}
-  }
-  @media(max-width:768px){
-    .ie-img-strip { padding:0 1.5rem 5rem; }
-    .ie-img-strip-inner { grid-template-columns:1fr 1fr; }
-    .ie-img-item { height:200px; }
-    .ie-img-item-tall { height:200px; }
-  }
-`;
-
-function PhoneCard({ num }) {
-  const emojis = ["💊", "🥗", "✨"];
+// Contour background: the app's own PNG on phones, a matching SVG on wider screens.
+function Contour({ className = "" }) {
   return (
-    <div className="ie-phone-screen">
-      <div className="ie-phone-bar" />
-      <div className="ie-phone-bar medium short" />
-      <div className="ie-phone-card-mini">
-        <div className="ie-phone-dot">{emojis[num]}</div>
-        <div className="ie-phone-lines"><div className="ie-phone-line" /><div className="ie-phone-line s" /></div>
-      </div>
-      <div className="ie-phone-card-mini">
-        <div className="ie-phone-dot" style={{ background: "rgba(255,255,255,0.12)" }}>📦</div>
-        <div className="ie-phone-lines"><div className="ie-phone-line" /><div className="ie-phone-line s" /></div>
-      </div>
-      <div className="ie-phone-bar" style={{ marginTop: "0.5rem", opacity: 0.3 }} />
-      <div className="ie-phone-bar medium short" style={{ opacity: 0.2 }} />
+    <div aria-hidden="true" className={`pointer-events-none absolute inset-0 ${className}`}>
+      <div className="absolute inset-0 bg-[url('/images/app/contour.webp')] bg-cover bg-center md:hidden" />
+      <div className="absolute inset-0 hidden bg-[url('/images/contour.svg')] bg-cover bg-center md:block" />
     </div>
   );
 }
 
-export default function Home() {
-  const revealRefs = useRef([]);
+function Eyebrow({ children, tone = "light" }) {
+  const t = tone === "dark" ? "bg-white/10 text-ie-green-100" : "bg-ie-green-100 text-ie-green-700";
+  return <p className={`m-0 mb-3 inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] ${t}`}>{children}</p>;
+}
+
+function SectionTitle({ children, className = "" }) {
+  return <h2 className={`m-0 text-3xl font-extrabold leading-tight tracking-tight text-ie-ink sm:text-4xl ${className}`}>{children}</h2>;
+}
+
+function GetAppMenu() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
-      { threshold: 0.12 }
-    );
-    revealRefs.current.forEach((el) => el && obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-
-  const r = (i) => (el) => { revealRefs.current[i] = el; };
+    if (!open) return;
+    const onDown = (e) => ref.current && !ref.current.contains(e.target) && setOpen(false);
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   return (
-    <>
-      <style>{styles}</style>
-      <div className="ie-home">
-
-
-        <section className="ie-hero">
-          <div className="ie-hero-bg" />
-          <div className="ie-hero-overlay" />
-          <div className="ie-hero-grid" />
-          <div className="ie-hero-orb ie-hero-orb-1" />
-          <div className="ie-hero-orb ie-hero-orb-2" />
-          <div className="ie-hero-inner">
-            <div>
-              <div className="ie-hero-badge">Now delivering in your city</div>
-              <h1 className="ie-hero-title">Healthy Living,<br /><em>Delivered Instantly.</em></h1>
-              <p className="ie-hero-desc">InstantEase connects  healthy food vendors, pharmacies, and beauty brands directly to your door — fast, safe, and effortless.</p>
-              {/* <div className="ie-hero-actions">
-                <button className="ie-btn-primary"><span>Get Started</span><span>→</span></button>
-                <button className="ie-btn-ghost">Explore Services</button>
-              </div> */}
-              <div className="ie-hero-stats">
-                <div><div className="ie-stat-val">50K<span>+</span></div><div className="ie-stat-label">Customers</div></div>
-                <div><div className="ie-stat-val">1.2K<span>+</span></div><div className="ie-stat-label">Vendors</div></div>
-                <div><div className="ie-stat-val">99<span>%</span></div><div className="ie-stat-label">On-time rate</div></div>
-              </div>
-            </div>
-            {/* <div className="ie-hero-visual">
-              <div className="ie-phones">
-                <div className="ie-phone ie-phone-1"><PhoneCard num={0} /></div>
-                <div className="ie-phone ie-phone-2"><PhoneCard num={1} /></div>
-                <div className="ie-phone ie-phone-3"><PhoneCard num={2} /></div>
-              </div>
-            </div> */}
-          </div>
-        </section>
-
-        <div className="ie-categories-wrap">
-          <div className="ie-section">
-            <div className="ie-section-header ie-reveal" ref={r(0)}>
-              <div>
-                <span className="ie-section-tag">What We Offer</span>
-                <h2 className="ie-section-title">Three categories,<br />one platform.</h2>
-                <p className="ie-section-sub">Everything you need for your health, nutrition, and beauty — sourced from trusted local vendors.</p>
-              </div>
-            </div>
-            <div className="ie-categories-grid">
-              {[
-                
-                { to: "/services/food", bg: "ie-cat-bg-2", emoji: "🥗", label: "Nutrition", title: "Healthy Food & Drinks", desc: "Fresh meals, organic produce, smoothies and nutritious snacks from top-rated vendors near you." },
-                { to: "/services/pharmacy", bg: "ie-cat-bg-1", emoji: "💊", label: "Health", title: "Pharmacy & Wellness", desc: "Prescription meds, OTC drugs, vitamins, supplements, and wellness essentials — delivered securely." },
-                { to: "/services/beauty", bg: "ie-cat-bg-3", emoji: "✨", label: "Beauty", title: "Beauty & Skincare", desc: "Curated skincare, cosmetics and beauty products from brands you know and love." },
-              ].map((c, i) => (
-                <Link key={i} to={c.to} className={"ie-cat-card ie-reveal"} ref={r(1 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
-                  <div className={"ie-cat-bg " + c.bg} />
-                  <div className="ie-cat-pattern" />
-                  <div className="ie-cat-emoji">{c.emoji}</div>
-                  <div className="ie-cat-content">
-                    <span className="ie-cat-label">{c.label}</span>
-                    <h3 className="ie-cat-title">{c.title}</h3>
-                    <p className="ie-cat-desc">{c.desc}</p>
-                    <div className="ie-cat-arrow">Explore <span>→</span></div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="ie-how-wrap">
-          <div className="ie-section">
-            <div className="ie-section-header ie-reveal" ref={r(4)}>
-              <div>
-                <span className="ie-section-tag">How It Works</span>
-                <h2 className="ie-section-title">From order to door,<br />in minutes.</h2>
-              </div>
-            </div>
-            <div className="ie-how-grid">
-              {[
-                { n: "01", title: "Browse & Choose", desc: "Explore products across pharmacies, healthy food vendors, and beauty brands." },
-                { n: "02", title: "Place Your Order", desc: "Add to cart and checkout securely with multiple payment options." },
-                { n: "03", title: "Vendor Prepares", desc: "The vendor confirms and prepares your order with care." },
-                { n: "04", title: "Rider Delivers", desc: "A verified rider picks up and delivers to your door with live tracking." },
-              ].map((s, i) => (
-                <div key={i} className={"ie-step ie-reveal"} ref={r(5 + i)} style={{ transitionDelay: i * 0.12 + "s" }}>
-                  <div className="ie-step-num">{s.n}</div>
-                  <div className="ie-step-title">{s.title}</div>
-                  <p className="ie-step-desc">{s.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="ie-apps-wrap">
-          <div className="ie-section">
-            <div className="ie-section-header ie-reveal" ref={r(9)}>
-              <div>
-                <span className="ie-section-tag">The Ecosystem</span>
-                <h2 className="ie-section-title">Three apps.<br />One connected world.</h2>
-                <p className="ie-section-sub">A seamless ecosystem built for customers, vendors, and riders — each with tools designed for their needs.</p>
-              </div>
-            </div>
-            <div className="ie-apps-grid">
-              {[
-                { icon: "📱", name: "Customer App", apk: "/downloads/instantease-customer-mobile-app.apk", desc: "Browse, order, and track deliveries from pharmacies, food vendors, and beauty brands — all in one place.", features: ["Easy browsing & ordering", "Real-time order tracking", "Secure payment methods", "Full order history"] },
-                { icon: "🏪", name: "Vendor App", apk: "/downloads/instantease-vendor-mobile-app.apk", desc: "Run your business smarter. Accept orders, manage inventory, and grow your customer base effortlessly.", features: ["Smart order management", "Live inventory tracking", "Sales analytics dashboard", "Customer insights & reviews"] },
-                { icon: "🏍️", name: "Rider App", apk: "/downloads/instantease-rider-mobile-app.apk", desc: "Earn flexibly with optimized routes and clear earnings tracking. Join a trusted network of delivery riders.", features: ["Optimized route planning", "Flexible scheduling", "Live earnings tracker", "Performance metrics & ratings"] },
-              ].map((app, i) => (
-                <div key={i} className={"ie-app-card ie-reveal"} ref={r(10 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
-                  <div className="ie-app-icon-wrap">{app.icon}</div>
-                  <h3 className="ie-app-name">{app.name}</h3>
-                  <p className="ie-app-desc">{app.desc}</p>
-                  <ul className="ie-app-features">
-                    {app.features.map((f, j) => (
-                      <li key={j}><span className="ie-check">✓</span>{f}</li>
-                    ))}
-                  </ul>
-                  <a href={app.apk} download className="ie-app-download">
-                    <span>↓</span> Download APK
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="ie-trust-wrap">
-          <div className="ie-section">
-            <div className="ie-section-header ie-reveal" ref={r(13)}>
-              <div>
-                <span className="ie-section-tag">Why InstantEase</span>
-                <h2 className="ie-section-title">Built on trust,<br />driven by care.</h2>
-              </div>
-            </div>
-            <div className="ie-trust-grid">
-              {[
-                { icon: "🔐", title: "Secure & Private", text: "Your orders, payments, and personal data are protected with end-to-end encryption and secure processing." },
-                { icon: "⚡", title: "Lightning Fast", text: "From order placement to delivery, we optimize every step so you receive your items as quickly as possible." },
-                { icon: "✅", title: "Verified Vendors", text: "Every pharmacy, food vendor, and beauty brand on our platform is vetted and quality-checked." },
-              ].map((t, i) => (
-                <div key={i} className={"ie-trust-card ie-reveal"} ref={r(14 + i)} style={{ transitionDelay: i * 0.1 + "s" }}>
-                  <div className="ie-trust-icon">{t.icon}</div>
-                  <div className="ie-trust-title">{t.title}</div>
-                  <p className="ie-trust-text">{t.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="ie-cta-wrap">
-          <div className={"ie-cta-inner ie-reveal"} ref={r(17)}>
-            <div className="ie-cta-orb" />
-            <div className="ie-cta-text">
-              <div className="ie-cta-tag">Ready to begin?</div>
-              <h2 className="ie-cta-title">Healthy Living,<br /><em>at your fingertips.</em></h2>
-              <p className="ie-cta-sub">Join thousands already using InstantEase. Download the app and get your first order delivered today.</p>
-            </div>
-            <div className="ie-cta-actions">
-              {[
-                { icon: "📱", sub: "Android APK", main: "Customer App", href: "/downloads/instantease-customer-mobile-app.apk" },
-                { icon: "🏪", sub: "Android APK", main: "Vendor App", href: "/downloads/instantease-vendor-mobile-app.apk" },
-                { icon: "🏍️", sub: "Android APK", main: "Rider App", href: "/downloads/instantease-rider-mobile-app.apk" },
-              ].map((btn, i) => (
-                <a key={i} href={btn.href} download className="ie-dl-btn">
-                  <span className="ie-dl-btn-icon">{btn.icon}</span>
-                  <span>
-                    <span className="ie-dl-btn-sub">{btn.sub}</span>
-                    <span className="ie-dl-btn-main">{btn.main}</span>
-                  </span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-controls="get-app-menu"
+        className={`flex min-h-13 cursor-pointer items-center gap-2 rounded-full border-0 bg-ie-orange px-7 text-base font-bold text-ie-green-900 transition-colors hover:bg-[#ff8a33] ${focusRing}`}
+      >
+        Get the app <ChevronDown size={18} aria-hidden="true" className={`transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      <div
+        id="get-app-menu"
+        hidden={!open}
+        className="absolute left-0 top-full z-20 mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-2xl bg-white p-3 shadow-[0_20px_50px_rgba(0,26,17,0.3)]"
+      >
+        <p className="m-0 mb-2 px-1 text-sm font-semibold text-ie-ink">InstantEase customer app</p>
+        <StoreButtons app={apps.customer} stacked />
       </div>
-    </>
+    </div>
   );
 }
+
+function Hero() {
+  return (
+    <section className="relative overflow-hidden bg-ie-dark text-white">
+      <Contour />
+      <div className={`${container} relative grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-24`}>
+        <div>
+          <Eyebrow tone="dark">Delivery across Lagos</Eyebrow>
+          <h1 className="m-0 text-[2.5rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
+            Pharmacy, healthy food and beauty, <span className="text-ie-orange">delivered fast.</span>
+          </h1>
+          <p className="m-0 mt-5 max-w-xl text-lg leading-relaxed text-white/85">
+            Order medicines, fresh meals and skincare from trusted stores near you. Pay in naira with Paystack and
+            track your rider all the way to your door.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <GetAppMenu />
+            <a
+              href="#vendors"
+              className={`flex min-h-13 items-center gap-2 rounded-full border border-white/40 px-7 text-base font-semibold text-white transition-colors hover:bg-white/10 ${focusRing}`}
+            >
+              Become a vendor <ArrowRight size={18} aria-hidden="true" />
+            </a>
+          </div>
+          <ul className="m-0 mt-8 flex list-none flex-wrap gap-x-6 gap-y-2 p-0 text-sm text-ie-green-100">
+            {["Verified pharmacies", "Secure Paystack checkout", "Live rider tracking"].map((t) => (
+              <li key={t} className="flex items-center gap-1.5">
+                <BadgeCheck size={16} aria-hidden="true" className="text-ie-green-200" /> {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex justify-center lg:justify-end">
+          <PhoneFrame src={screens.home} alt="InstantEase app home screen" className="rotate-[-3deg]">
+            <HomeScreenSketch />
+          </PhoneFrame>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const categories = [
+  {
+    slug: "pharmacy", title: "Pharmacy & Wellness", bg: "bg-cat-pharmacy", img: "/images/app/pharmacy-icon.png", imgW: 48, imgH: 49,
+    desc: "Over-the-counter medicines, prescriptions, vitamins and wellness essentials from licensed pharmacies.",
+  },
+  {
+    slug: "food", title: "Healthy Food & Drinks", bg: "bg-cat-food", img: "/images/app/restaurant-icon.png", imgW: 57, imgH: 57,
+    desc: "Fresh meals, smoothies, produce and better-for-you snacks from vetted food vendors.",
+  },
+  {
+    slug: "beauty", title: "Beauty & Skincare", bg: "bg-cat-beauty", img: "/images/app/beauty-icon.png", imgW: 96, imgH: 47,
+    desc: "Skincare, makeup, hair care and fragrance from verified beauty retailers.",
+  },
+];
+
+function Categories() {
+  return (
+    <section id="customers" className="scroll-mt-20 bg-white py-16 sm:py-24">
+      <div className={container}>
+        <Eyebrow>For customers</Eyebrow>
+        <SectionTitle>Everything for a healthier you, in one app.</SectionTitle>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {categories.map((c) => (
+            <Link
+              key={c.slug}
+              to={`/services/${c.slug}`}
+              className={`group flex flex-col rounded-3xl ${c.bg} p-6 transition-transform hover:-translate-y-1 sm:p-7 ${focusRing}`}
+            >
+              <div className="flex h-14 items-center">
+                <img src={c.img} alt="" width={c.imgW} height={c.imgH} loading="lazy" className="h-auto max-h-14 w-auto" />
+              </div>
+              <h3 className="m-0 mt-6 text-xl font-bold text-ie-ink">{c.title}</h3>
+              <p className="m-0 mt-2 flex-1 leading-relaxed text-ie-slate">{c.desc}</p>
+              <span className="mt-6 inline-flex items-center gap-1.5 font-semibold text-ie-green-700">
+                Explore <ArrowRight size={18} aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const steps = [
+  { Icon: Download, title: "Download the app", text: "Get InstantEase on your phone and set your delivery address." },
+  { Icon: Store, title: "Choose a store near you", text: "Browse pharmacies, healthy food spots and beauty stores close to you." },
+  { Icon: CreditCard, title: "Pay securely with Paystack", text: "Pay by card, bank transfer, bank or USSD at checkout." },
+  { Icon: Bike, title: "Track your rider to your door", text: "Follow your order live and share your delivery code when it arrives." },
+];
+
+function HowItWorks() {
+  return (
+    <section id="how-it-works" className="scroll-mt-20 bg-ie-mist py-16 sm:py-24">
+      <div className={container}>
+        <Eyebrow>How it works</Eyebrow>
+        <SectionTitle>From your phone to your door in four steps.</SectionTitle>
+        <ol className="m-0 mt-10 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step, i) => {
+            const { Icon, title, text } = step;
+            return (
+            <li key={title} className="rounded-2xl border border-ie-line bg-white p-6">
+              <div className="flex items-center justify-between">
+                <span className="flex size-12 items-center justify-center rounded-full bg-ie-green-100 text-ie-green">
+                  <Icon size={24} aria-hidden="true" />
+                </span>
+                <span className="text-sm font-bold text-ie-green" aria-hidden="true">0{i + 1}</span>
+              </div>
+              <h3 className="m-0 mt-5 text-lg font-bold text-ie-ink">{title}</h3>
+              <p className="m-0 mt-2 leading-relaxed text-ie-slate">{text}</p>
+            </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function Tracking() {
+  return (
+    <section id="tracking" className="relative scroll-mt-20 overflow-hidden bg-ie-dark py-16 text-white sm:py-24">
+      <Contour className="opacity-70" />
+      <div className={`${container} relative grid items-center gap-12 lg:grid-cols-2`}>
+        <div>
+          <Eyebrow tone="dark">Live tracking</Eyebrow>
+          <h2 className="m-0 text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+            Watch your order move, right to your gate.
+          </h2>
+          <p className="m-0 mt-4 max-w-lg text-lg leading-relaxed text-white/85">
+            See when the store confirms your order, when it's being prepared, and where your rider is on the map.
+          </p>
+          <div className="mt-8 max-w-lg rounded-2xl border border-white/20 bg-white/10 p-6">
+            <h3 className="m-0 flex items-center gap-2 text-lg font-bold">
+              <ShieldCheck size={22} aria-hidden="true" className="text-ie-green-200" /> Your delivery code keeps orders safe
+            </h3>
+            <p className="m-0 mt-2 leading-relaxed text-white/85">
+              When a rider is assigned, the app shows you a private 6-digit delivery code. Give it to the rider only when
+              your order is in your hands. The rider enters it to complete the delivery, so your order can't be marked
+              delivered without you.
+            </p>
+          </div>
+        </div>
+        <div className="flex justify-center gap-4 sm:gap-6">
+          <PhoneFrame src={screens.tracking} alt="InstantEase order tracking screen" size="sm">
+            <TrackingScreenSketch />
+          </PhoneFrame>
+          <PhoneFrame src={screens.deliveryCode} alt="InstantEase delivery code screen" size="sm" className="mt-10">
+            <DeliveryCodeSketch />
+          </PhoneFrame>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const features = [
+  { Icon: BadgeCheck, title: "Verified pharmacies", text: "Every pharmacy is checked and licensed before it can sell on InstantEase." },
+  { Icon: Leaf, title: "Healthy meals", text: "Fresh, balanced meals and drinks from vetted food vendors." },
+  { Icon: Sparkles, title: "Beauty brands", text: "Skincare, makeup and hair care from verified beauty retailers." },
+  { Icon: Navigation, title: "Live tracking", text: "See where your rider is, from pickup to your door." },
+  { Icon: CreditCard, title: "Secure payments", text: "Checkout runs on Paystack: card, transfer, bank or USSD." },
+  { Icon: Headset, title: "Real support", text: "Reach our team in the app, by email or by phone if anything goes wrong." },
+];
+
+function FeatureTile(props) {
+  const { Icon, title, text, className = "" } = props;
+  return (
+    <div className={`rounded-2xl border border-ie-line bg-white p-6 ${className}`}>
+      <span className="flex size-11 items-center justify-center rounded-xl bg-ie-green text-white">
+        <Icon size={22} aria-hidden="true" />
+      </span>
+      <h3 className="m-0 mt-4 text-lg font-bold text-ie-ink">{title}</h3>
+      <p className="m-0 mt-1.5 leading-relaxed text-ie-slate">{text}</p>
+    </div>
+  );
+}
+
+function WhyInstantEase() {
+  return (
+    <section id="why" className="scroll-mt-20 overflow-hidden bg-white py-16 sm:py-24">
+      <div className={container}>
+        <Eyebrow>Why InstantEase</Eyebrow>
+        <SectionTitle>Built for health, beauty and good food.</SectionTitle>
+        {/* Static grid: phones, tablets, and anyone who prefers reduced motion. */}
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:motion-safe:hidden">
+          {features.map((f) => <FeatureTile key={f.title} {...f} />)}
+        </div>
+      </div>
+      {/* Gentle marquee on desktop only; pauses on hover or keyboard focus. */}
+      <div className="group mt-10 hidden lg:motion-safe:block">
+        <div className="flex w-max animate-marquee gap-4 group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]">
+          {[...features, ...features].map((f, i) => (
+            <div key={i} aria-hidden={i >= features.length ? "true" : undefined} className="w-80">
+              <FeatureTile {...f} className="h-full" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function JoinCard(props) {
+  const { id, Icon, eyebrow, title, text, cta, app, tone } = props;
+  const dark = tone === "dark";
+  return (
+    <article
+      id={id}
+      className={`relative flex scroll-mt-20 flex-col overflow-hidden rounded-3xl p-7 sm:p-10 ${dark ? "bg-ie-dark text-white" : "bg-cat-beauty text-ie-ink"}`}
+    >
+      {dark && <Contour className="opacity-60" />}
+      <div className="relative flex flex-1 flex-col">
+        <span className={`flex size-12 items-center justify-center rounded-2xl ${dark ? "bg-white/10 text-ie-green-100" : "bg-white text-ie-burnt-dark"}`}>
+          <Icon size={24} aria-hidden="true" />
+        </span>
+        <p className={`m-0 mt-6 text-sm font-bold uppercase tracking-[0.12em] ${dark ? "text-ie-green-200" : "text-ie-burnt-dark"}`}>{eyebrow}</p>
+        <h3 className="m-0 mt-2 text-2xl font-extrabold leading-tight sm:text-3xl">{title}</h3>
+        <p className={`m-0 mt-3 flex-1 text-lg leading-relaxed ${dark ? "text-white/85" : "text-ie-slate"}`}>{text}</p>
+        <p className="m-0 mt-8 font-bold">{cta}</p>
+        <StoreButtons app={app} only={["apk", "appStore"]} tone={dark ? "dark" : "light"} className="mt-3" />
+      </div>
+    </article>
+  );
+}
+
+function VendorsAndRiders() {
+  return (
+    <section className="bg-ie-mist py-16 sm:py-24">
+      <div className={`${container} grid gap-5 lg:grid-cols-2`}>
+        <JoinCard
+          id="vendors" Icon={Store} eyebrow="For vendors" title="Sell on InstantEase" app={apps.vendor} cta="Start selling"
+          text="Reach more customers across Lagos. Take orders, manage your stock and get paid, all from the Vendor app."
+        />
+        <JoinCard
+          id="riders" Icon={Bike} eyebrow="For riders" title="Ride with InstantEase" app={apps.rider} cta="Start riding" tone="dark"
+          text="Earn on your own schedule. Get delivery requests near you, clear directions and a record of your earnings."
+        />
+      </div>
+    </section>
+  );
+}
+
+function Areas() {
+  return (
+    <section id="areas" className="scroll-mt-20 bg-white py-16 sm:py-20">
+      <div className={container}>
+        <Eyebrow>Where we deliver</Eyebrow>
+        <SectionTitle>Areas we deliver to in Lagos.</SectionTitle>
+        {areas.length ? (
+          <ul className="m-0 mt-8 flex list-none flex-wrap gap-2.5 p-0">
+            {areas.map((a) => (
+              <li key={a} className="flex items-center gap-1.5 rounded-full border border-ie-green-100 bg-ie-green-100/50 px-4 py-2 font-medium text-ie-green-700">
+                <MapPin size={16} aria-hidden="true" /> {a}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="m-0 mt-6 max-w-xl text-lg leading-relaxed text-ie-slate">
+            Our full list of areas is coming soon. In the meantime, enter your address in the app to see the stores that
+            deliver to you.
+          </p>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function DownloadBand() {
+  return (
+    <section id="download" className="relative scroll-mt-20 overflow-hidden bg-ie-green-600 py-16 text-white sm:py-20">
+      <Contour className="opacity-50" />
+      <div className={`${container} relative`}>
+        <h2 className="m-0 max-w-2xl text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">
+          Get the InstantEase app.
+        </h2>
+        <p className="m-0 mt-3 max-w-xl text-lg text-white/90">Order, pay and track in one place.</p>
+        <StoreButtons app={apps.customer} tone="dark" className="mt-8" />
+        <p className="m-0 mt-8 text-white/90">
+          Selling or riding with us?{" "}
+          <a href={apps.vendor.apk} download className={`font-semibold text-white underline underline-offset-4 ${focusRing}`}>Vendor app (APK)</a>
+          {" · "}
+          <a href={apps.rider.apk} download className={`font-semibold text-white underline underline-offset-4 ${focusRing}`}>Rider app (APK)</a>
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// TODO: confirm every answer below before going live.
+const faqs = [
+  {
+    q: "How do I place an order?",
+    a: "Download the InstantEase app, set your delivery address, then browse pharmacies, healthy food vendors and beauty stores near you. Add items to your cart and check out.",
+  },
+  {
+    q: "How much is delivery?",
+    a: "Delivery fees depend on distance and order size. You'll see the exact fee at checkout before you pay.",
+  },
+  {
+    q: "How can I pay?",
+    a: "Checkout runs on Paystack, so you can pay by card, bank transfer, bank or USSD.",
+  },
+  {
+    q: "Can I order prescription medicines?",
+    a: "Yes. Upload a valid prescription in the app and a licensed pharmacy will review it before dispensing.",
+  },
+  {
+    q: "What if something is wrong with my order?",
+    a: "Report it from the order screen in the app or contact support with your order number. If a refund is approved, it goes back to your original payment method.",
+  },
+  {
+    q: "How do I become a vendor or rider?",
+    a: "Download the Vendor app or the Rider app, sign up and upload the documents it asks for. We review applications, usually within 48 hours.",
+  },
+];
+
+function Faq() {
+  return (
+    <section id="faq" className="scroll-mt-20 bg-ie-mist py-16 sm:py-24">
+      <div className="mx-auto w-full max-w-[860px] px-4 sm:px-6">
+        <Eyebrow>FAQ</Eyebrow>
+        <SectionTitle>Questions, answered.</SectionTitle>
+        <div className="mt-8 space-y-3">
+          {faqs.map(({ q, a }) => (
+            <details key={q} className="group rounded-2xl border border-ie-line bg-white">
+              <summary className={`flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-4 text-lg font-semibold text-ie-ink [&::-webkit-details-marker]:hidden ${focusRing}`}>
+                {q}
+                <ChevronDown size={20} aria-hidden="true" className="shrink-0 text-ie-green transition-transform group-open:rotate-180" />
+              </summary>
+              <p className="m-0 px-5 pb-5 leading-relaxed text-ie-slate">{a}</p>
+            </details>
+          ))}
+        </div>
+        <p className="m-0 mt-6 text-ie-slate">
+          More questions? Visit{" "}
+          <Link to="/support" className={`font-semibold text-ie-green-700 underline underline-offset-4 ${focusRing}`}>Support</Link>.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Home() {
+  return (
+    <div className="font-figtree text-ie-ink">
+      <Hero />
+      <Categories />
+      <HowItWorks />
+      <Tracking />
+      <WhyInstantEase />
+      <VendorsAndRiders />
+      <Areas />
+      <DownloadBand />
+      <Faq />
+    </div>
+  );
+}
+
+export default Home;

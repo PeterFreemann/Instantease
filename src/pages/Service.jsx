@@ -7,7 +7,7 @@ const services = {
     label: "Health",
     title: "Pharmacy & Wellness",
     intro: "Prescription medicines, over-the-counter drugs, vitamins, supplements and wellness essentials from licensed pharmacies near you — delivered securely to your door.",
-    image: "/hero.jpg",
+    image: "/hero.webp",
     offers: [
       { icon: "💊", title: "Over-the-counter medicines", text: "Pain relief, cold and flu remedies, allergy care, first aid and other everyday essentials." },
       { icon: "📋", title: "Prescription medicines", text: "Upload a valid prescription in the app and a licensed pharmacy will review it before dispensing." },
