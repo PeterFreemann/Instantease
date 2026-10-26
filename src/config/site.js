@@ -50,9 +50,9 @@ export const screens = {
 };
 
 export const nav = [
-  { label: "Customers", to: "/#customers" },
-  { label: "Vendors", to: "/#vendors" },
-  { label: "Riders", to: "/#riders" },
+  { label: "Customers", to: "/customers" },
+  { label: "Vendors", to: "/vendors" },
+  { label: "Riders", to: "/riders" },
   { label: "About", to: "/about" },
   { label: "Support", to: "/support" },
 ];

@@ -10,6 +10,9 @@ import Support from './pages/Support';
 import Terms from './pages/Terms';
 import Legal from './pages/Legal';
 import Service from './pages/Service';
+import Customers from './pages/Customers';
+import Vendors from './pages/Vendors';
+import Riders from './pages/Riders';
 import './App.css';
 
 function ScrollToTop() {
@@ -34,6 +37,9 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/vendors" element={<Vendors />} />
+            <Route path="/riders" element={<Riders />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/support" element={<Support />} />

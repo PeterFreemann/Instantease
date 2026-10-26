@@ -48,6 +48,9 @@ function Footer() {
 
           <Column title="Explore">
             <li><Link to="/" className={linkClass}>Home</Link></li>
+            <li><Link to="/customers" className={linkClass}>For Customers</Link></li>
+            <li><Link to="/vendors" className={linkClass}>For Vendors</Link></li>
+            <li><Link to="/riders" className={linkClass}>For Riders</Link></li>
             <li><Link to="/about" className={linkClass}>About Us</Link></li>
             <li><Link to="/contact" className={linkClass}>Contact</Link></li>
             <li><Link to="/support" className={linkClass}>Support</Link></li>
