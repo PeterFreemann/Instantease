@@ -42,7 +42,7 @@ function GetAppMenu() {
         className="absolute left-0 top-full z-20 mt-2 w-[min(20rem,calc(100vw-2rem))] rounded-2xl bg-white p-3 shadow-[0_20px_50px_rgba(0,26,17,0.3)]"
       >
         <p className="m-0 mb-2 px-1 text-sm font-semibold text-ie-ink">InstantEase customer app</p>
-        <StoreButtons app={apps.customer} stacked />
+        <StoreButtons app={apps.customer} only={["playStore", "appStore"]} stacked />
       </div>
     </div>
   );

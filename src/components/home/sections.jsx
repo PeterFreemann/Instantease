@@ -36,10 +36,10 @@ export function PageHero({ eyebrow, title, text, app, aside }) {
       <Contour />
       <div className={`${container} relative grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-24`}>
         <div>
-          <Eyebrow tone="dark">{eyebrow}</Eyebrow>
+          {/* <Eyebrow tone="dark">{eyebrow}</Eyebrow> */}
           <h1 className="m-0 text-[2.5rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl">{title}</h1>
           <p className="m-0 mt-5 max-w-xl text-lg leading-relaxed text-white/85">{text}</p>
-          <StoreButtons app={app} tone="dark" className="mt-8" />
+          <StoreButtons app={app} only={["playStore", "appStore"]} tone="dark" className="mt-8" />
         </div>
         <div className="flex justify-center lg:justify-end">{aside}</div>
       </div>

@@ -9,7 +9,7 @@ function Customers() {
   return (
     <div className="font-figtree text-ie-ink">
       <PageHero
-        eyebrow="For customers"
+        
         title={<>Health, food and beauty, <span className="text-ie-orange">at your door.</span></>}
         text="Shop licensed pharmacies, healthy food vendors and beauty stores near you in Lagos. Pay in naira with Paystack and follow your rider live."
         app={apps.customer}
